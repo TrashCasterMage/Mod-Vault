@@ -1,6 +1,5 @@
 package iskallia.vault.network.message;
 
-import iskallia.vault.client.gui.overlay.AbilitiesOverlay;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -43,12 +42,6 @@ public class AbilityActivityMessage {
 
     public static void handle(AbilityActivityMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
-        context.enqueueWork(() -> {
-            AbilitiesOverlay.cooldowns.put(message.abilityIndex, message.cooldownTicks);
-            if (message.activeFlag != 0) {
-                AbilitiesOverlay.active = message.activeFlag != 1;
-            }
-        });
         context.setPacketHandled(true);
     }
 

@@ -1,7 +1,5 @@
 package iskallia.vault.network.message;
 
-import iskallia.vault.entity.EternalEntity;
-import iskallia.vault.entity.FighterEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
@@ -48,8 +46,6 @@ public class FighterSizeMessage {
 			World world = player.world;
 			Entity entity = world.getEntityByID(message.entityId);
 			if(entity == null || !entity.isAlive())return;
-			if(entity instanceof FighterEntity)((FighterEntity)entity).changeSize(message.size);
-			if(entity instanceof EternalEntity)((EternalEntity)entity).changeSize(message.size);
 		});
 
 		context.setPacketHandled(true);

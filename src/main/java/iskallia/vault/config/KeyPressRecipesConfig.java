@@ -5,7 +5,6 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import iskallia.vault.Vault;
 import iskallia.vault.config.entry.ItemEntry;
 import iskallia.vault.config.entry.SingleItemEntry;
-import iskallia.vault.init.ModItems;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
@@ -83,9 +82,6 @@ public class KeyPressRecipesConfig extends Config {
         Recipe recipe;
 
         recipe = new Recipe();
-        recipe.KEY_ITEM = new SingleItemEntry(ModItems.BLANK_KEY.getRegistryName().toString(), "");
-        recipe.CLUSTER_ITEM = new SingleItemEntry(ModItems.SPARKLETINE_CLUSTER.getRegistryName().toString(), "");
-        recipe.RESULT_ITEM = new ItemEntry(ModItems.SPARKLETINE_KEY.getRegistryName().toString(), 1, "");
         this.RECIPES.add(recipe);
     }
 

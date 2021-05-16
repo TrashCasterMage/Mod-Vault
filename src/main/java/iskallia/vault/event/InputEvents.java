@@ -1,7 +1,5 @@
 package iskallia.vault.event;
 
-import iskallia.vault.client.gui.overlay.AbilitiesOverlay;
-import iskallia.vault.client.gui.screen.AbilitySelectionScreen;
 import iskallia.vault.init.ModKeybinds;
 import iskallia.vault.init.ModNetwork;
 import iskallia.vault.network.message.AbilityKeyMessage;
@@ -50,8 +48,6 @@ public class InputEvents {
     private static void onInput(Minecraft minecraft, int key, int action) {
         if (minecraft.currentScreen == null && ModKeybinds.abilityWheelKey.getKey().getKeyCode() == key) {
             if (action != GLFW.GLFW_PRESS) return;
-            if (AbilitiesOverlay.learnedAbilities.size() <= 2) return;
-            minecraft.displayGuiScreen(new AbilitySelectionScreen());
             ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(true));
 
         } else if (minecraft.currentScreen == null && ModKeybinds.openAbilityTree.isPressed()) {

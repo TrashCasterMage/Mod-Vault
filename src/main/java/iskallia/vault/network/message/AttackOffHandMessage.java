@@ -62,11 +62,6 @@ public class AttackOffHandMessage {
 
 			int level = PlayerVaultStatsData.get((ServerWorld)player.world).getVaultStats(player).getVaultLevel();
 
-			if(ModAttributes.MIN_VAULT_LEVEL.exists(offhand)
-					&& level < ModAttributes.MIN_VAULT_LEVEL.get(offhand).get().getValue(offhand)) {
-				return;
-			}
-
 			Entity target = player.world.getEntityByID(packet.entityId);
 			if(target == null)return;
 			float reach = 6.0F;

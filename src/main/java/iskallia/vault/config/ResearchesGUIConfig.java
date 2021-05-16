@@ -112,7 +112,7 @@ public class ResearchesGUIConfig extends Config {
         style = new SkillStyle(50 * 2, 50 * 3,
                 16 * 7, 16);
         style.frameType = SkillFrame.RECTANGULAR;
-        styles.put("Traveller", style);
+        styles.put("World Eater", style);
 
         style = new SkillStyle(50 * 3, 50 * 3,
                 16 * 8, 16);

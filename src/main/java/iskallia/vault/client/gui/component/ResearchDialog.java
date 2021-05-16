@@ -15,7 +15,6 @@ import iskallia.vault.init.ModSounds;
 import iskallia.vault.network.message.ResearchMessage;
 import iskallia.vault.research.ResearchTree;
 import iskallia.vault.research.type.Research;
-import iskallia.vault.skill.talent.TalentTree;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
@@ -28,16 +27,14 @@ public class ResearchDialog extends AbstractGui {
     private Rectangle bounds;
     private String researchName;
     private ResearchTree researchTree;
-    private TalentTree talentTree;
 
     private ResearchWidget researchWidget;
     private ScrollableContainer descriptionComponent;
     private Button researchButton;
 
-    public ResearchDialog(ResearchTree researchTree, TalentTree talentTree) {
+    public ResearchDialog(ResearchTree researchTree) {
         this.researchName = null;
         this.researchTree = researchTree;
-        this.talentTree = talentTree;
         refreshWidgets();
     }
 

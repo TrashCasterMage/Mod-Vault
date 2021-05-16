@@ -4,9 +4,6 @@ import com.google.gson.annotations.Expose;
 import iskallia.vault.init.ModConfigs;
 import iskallia.vault.research.ResearchTree;
 import iskallia.vault.research.type.Research;
-import iskallia.vault.skill.ability.AbilityGroup;
-import iskallia.vault.skill.talent.TalentGroup;
-import iskallia.vault.skill.talent.TalentTree;
 
 import java.util.*;
 
@@ -22,49 +19,6 @@ public class SkillGates {
         this.entries.put(skillName, entry);
     }
 
-    public List<AbilityGroup<?>> getDependencyAbilities(String abilityName) {
-        List<AbilityGroup<?>> abilities = new LinkedList<>();
-        Entry entry = entries.get(abilityName);
-        if (entry == null) return abilities;
-        entry.dependsOn.forEach(dependencyName -> {
-            AbilityGroup<?> dependency = ModConfigs.ABILITIES.getByName(dependencyName);
-            abilities.add(dependency);
-        });
-        return abilities;
-    }
-
-    public List<AbilityGroup<?>> getLockedByAbilities(String abilityName) {
-        List<AbilityGroup<?>> abilities = new LinkedList<>();
-        Entry entry = entries.get(abilityName);
-        if (entry == null) return abilities;
-        entry.lockedBy.forEach(dependencyName -> {
-            AbilityGroup<?> dependency = ModConfigs.ABILITIES.getByName(dependencyName);
-            abilities.add(dependency);
-        });
-        return abilities;
-    }
-
-    public List<TalentGroup<?>> getDependencyTalents(String talentName) {
-        List<TalentGroup<?>> talents = new LinkedList<>();
-        Entry entry = entries.get(talentName);
-        if (entry == null) return talents;
-        entry.dependsOn.forEach(dependencyName -> {
-            TalentGroup<?> dependency = ModConfigs.TALENTS.getByName(dependencyName);
-            talents.add(dependency);
-        });
-        return talents;
-    }
-
-    public List<TalentGroup<?>> getLockedByTalents(String talentName) {
-        List<TalentGroup<?>> talents = new LinkedList<>();
-        Entry entry = entries.get(talentName);
-        if (entry == null) return talents;
-        entry.lockedBy.forEach(dependencyName -> {
-            TalentGroup<?> dependency = ModConfigs.TALENTS.getByName(dependencyName);
-            talents.add(dependency);
-        });
-        return talents;
-    }
 
     public List<Research> getDependencyResearches(String researchName) {
         List<Research> researches = new LinkedList<>();
@@ -106,21 +60,6 @@ public class SkillGates {
         return false;
     }
 
-    public boolean isLocked(TalentGroup<?> talent, TalentTree talentTree) {
-        SkillGates gates = ModConfigs.SKILL_GATES.getGates();
-
-        for (TalentGroup<?> dependencyTalent : gates.getDependencyTalents(talent.getParentName())) {
-            if (!talentTree.getNodeOf(dependencyTalent).isLearned())
-                return true;
-        }
-
-        for (TalentGroup<?> lockedByTalent : gates.getLockedByTalents(talent.getParentName())) {
-            if (talentTree.getNodeOf(lockedByTalent).isLearned())
-                return true;
-        }
-
-        return false;
-    }
 
     public static class Entry {
         @Expose private List<String> dependsOn;

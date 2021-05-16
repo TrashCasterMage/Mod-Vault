@@ -1,6 +1,5 @@
 package iskallia.vault.client.gui.tab;
 
-import iskallia.vault.client.gui.screen.SkillTreeScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector2f;
@@ -8,6 +7,8 @@ import net.minecraft.util.text.ITextComponent;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import iskallia.vault.client.gui.screen.SkillTreeScreen;
 
 public abstract class SkillTab extends Screen {
 

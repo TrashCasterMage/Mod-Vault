@@ -4,9 +4,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import iskallia.vault.world.data.PlayerAbilitiesData;
 import iskallia.vault.world.data.PlayerResearchesData;
-import iskallia.vault.world.data.PlayerTalentsData;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -65,8 +63,6 @@ public class VaultLevelCommand extends Command {
     private int resetAll(CommandContext<CommandSource> context) throws CommandSyntaxException {
         CommandSource source = context.getSource();
         PlayerVaultStatsData.get(source.getWorld()).reset(source.asPlayer());
-        PlayerAbilitiesData.get(source.getWorld()).resetAbilityTree(source.asPlayer());
-        PlayerTalentsData.get(source.getWorld()).resetTalentTree(source.asPlayer());
         PlayerResearchesData.get(source.getWorld()).resetResearchTree(source.asPlayer());
         return 0;
     }

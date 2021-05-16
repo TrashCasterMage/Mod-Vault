@@ -1,6 +1,5 @@
 package iskallia.vault.network.message;
 
-import iskallia.vault.client.gui.overlay.AbilitiesOverlay;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -30,9 +29,6 @@ public class AbilityFocusMessage {
 
     public static void handle(AbilityFocusMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
-        context.enqueueWork(() -> {
-            AbilitiesOverlay.focusedIndex = message.focusedIndex;
-        });
         context.setPacketHandled(true);
     }
 

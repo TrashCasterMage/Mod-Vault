@@ -70,30 +70,15 @@ public class ModNetwork {
                 AbilityActivityMessage::decode,
                 AbilityActivityMessage::handle);
 
-        CHANNEL.registerMessage(nextId(), VaultRaidTickMessage.class,
-                VaultRaidTickMessage::encode,
-                VaultRaidTickMessage::decode,
-                VaultRaidTickMessage::handle);
-
         CHANNEL.registerMessage(nextId(), FighterSizeMessage.class,
                 FighterSizeMessage::encode,
                 FighterSizeMessage::decode,
                 FighterSizeMessage::handle);
 
-        CHANNEL.registerMessage(nextId(), VendingUIMessage.class,
-                VendingUIMessage::encode,
-                VendingUIMessage::decode,
-                VendingUIMessage::handle);
-
         CHANNEL.registerMessage(nextId(), VaultBeginMessage.class,
                 VaultBeginMessage::encode,
                 VaultBeginMessage::decode,
                 VaultBeginMessage::handle);
-
-        CHANNEL.registerMessage(nextId(), AdvancedVendingUIMessage.class,
-                AdvancedVendingUIMessage::encode,
-                AdvancedVendingUIMessage::decode,
-                AdvancedVendingUIMessage::handle);
 
         CHANNEL.registerMessage(nextId(), VaultEscapeMessage.class,
                 VaultEscapeMessage::encode,
@@ -104,11 +89,6 @@ public class ModNetwork {
                 RenameUIMessage::encode,
                 RenameUIMessage::decode,
                 RenameUIMessage::handle);
-
-        CHANNEL.registerMessage(nextId(), VaultInfoMessage.class,
-                VaultInfoMessage::encode,
-                VaultInfoMessage::decode,
-                VaultInfoMessage::handle);
 
         CHANNEL.registerMessage(nextId(), StepHeightMessage.class,
                 StepHeightMessage::encode,

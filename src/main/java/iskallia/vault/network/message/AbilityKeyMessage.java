@@ -1,7 +1,5 @@
 package iskallia.vault.network.message;
 
-import iskallia.vault.skill.ability.AbilityTree;
-import iskallia.vault.world.data.PlayerAbilitiesData;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.world.server.ServerWorld;
@@ -65,22 +63,6 @@ public class AbilityKeyMessage {
 
             if (sender == null) return;
 
-            PlayerAbilitiesData abilitiesData = PlayerAbilitiesData.get((ServerWorld) sender.world);
-            AbilityTree abilityTree = abilitiesData.getAbilities(sender);
-
-            if (message.scrollUp) {
-                abilityTree.scrollUp(sender.server);
-            } else if (message.scrollDown) {
-                abilityTree.scrollDown(sender.server);
-            } else if (message.keyUp) {
-                abilityTree.keyUp(sender.server);
-            } else if (message.keyDown) {
-                abilityTree.keyDown(sender.server);
-            } else if (message.shouldCancelDown) {
-                abilityTree.cancelKeyDown(sender.server);
-            } else if (message.abilityIndex != -1) {
-                abilityTree.quickSelectAbility(sender.server, message.abilityIndex);
-            }
         });
         context.setPacketHandled(true);
     }

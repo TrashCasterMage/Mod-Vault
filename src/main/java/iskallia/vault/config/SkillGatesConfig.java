@@ -22,14 +22,6 @@ public class SkillGatesConfig extends Config {
         SKILL_GATES = new SkillGates();
         SkillGates.Entry gateEntry;
 
-        // Talents
-        gateEntry = new SkillGates.Entry();
-        gateEntry.setLockedBy(ModConfigs.TALENTS.VAMPIRISM.getParentName());
-        SKILL_GATES.addEntry(ModConfigs.TALENTS.REGENERATION.getParentName(), gateEntry);
-
-        gateEntry = new SkillGates.Entry();
-        gateEntry.setLockedBy(ModConfigs.TALENTS.REGENERATION.getParentName());
-        SKILL_GATES.addEntry(ModConfigs.TALENTS.VAMPIRISM.getParentName(), gateEntry);
 
         // Researches
         gateEntry = new SkillGates.Entry();

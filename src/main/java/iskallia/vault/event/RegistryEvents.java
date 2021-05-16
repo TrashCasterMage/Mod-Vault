@@ -1,7 +1,6 @@
 package iskallia.vault.event;
 
 import iskallia.vault.init.*;
-import iskallia.vault.util.RelicSet;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -21,24 +20,6 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryEvents {
 
-    @SubscribeEvent
-    public static void onBlockRegister(RegistryEvent.Register<Block> event) {
-        ModBlocks.registerBlocks(event);
-    }
-
-    @SubscribeEvent
-    public static void onItemRegister(RegistryEvent.Register<Item> event) {
-        ModItems.registerItems(event);
-        ModBlocks.registerBlockItems(event);
-        RelicSet.register();
-    }
-
-    @SubscribeEvent
-    public static void onModelRegister(ModelRegistryEvent event) {
-        ModModels.setupRenderLayers();
-        ModModels.ItemProperty.register();
-        ModModels.GearModel.register();
-    }
 
     @SubscribeEvent
     public static void onSoundRegister(RegistryEvent.Register<SoundEvent> event) {
@@ -60,16 +41,6 @@ public class RegistryEvents {
     @SubscribeEvent
     public static void onContainerRegister(RegistryEvent.Register<ContainerType<?>> event) {
         ModContainers.register(event);
-    }
-
-    @SubscribeEvent
-    public static void onEntityRegister(RegistryEvent.Register<EntityType<?>> event) {
-        ModEntities.register(event);
-    }
-
-    @SubscribeEvent
-    public static void onTileEntityRegister(RegistryEvent.Register<TileEntityType<?>> event) {
-        ModBlocks.registerTileEntities(event);
     }
 
     @SubscribeEvent

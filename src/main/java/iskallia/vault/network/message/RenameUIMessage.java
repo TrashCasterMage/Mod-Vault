@@ -1,8 +1,5 @@
 package iskallia.vault.network.message;
 
-import iskallia.vault.block.entity.CryoChamberTileEntity;
-import iskallia.vault.block.entity.LootStatueTileEntity;
-import iskallia.vault.block.entity.PlayerStatueTileEntity;
 import iskallia.vault.util.RenameType;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -42,27 +39,12 @@ public class RenameUIMessage {
             if (message.renameType == RenameType.PLAYER_STATUE) {
                 BlockPos statuePos = new BlockPos(data.getInt("x"), data.getInt("y"), data.getInt("z"));
                 TileEntity te = sender.getEntityWorld().getTileEntity(statuePos);
-                if (te instanceof PlayerStatueTileEntity) {
-                    PlayerStatueTileEntity statue = (PlayerStatueTileEntity) te;
-                    statue.getSkin().updateSkin(data.getString("PlayerNickname"));
-                    statue.sendUpdates();
-                } else if (te instanceof LootStatueTileEntity) {
-                    LootStatueTileEntity statue = (LootStatueTileEntity) te;
-                    statue.getSkin().updateSkin(data.getString("PlayerNickname"));
-                    statue.sendUpdates();
-                }
             } else if (message.renameType == RenameType.TRADER_CORE) {
                 sender.inventory.mainInventory.set(sender.inventory.currentItem, ItemStack.read(data));
             } else if(message.renameType == RenameType.CRYO_CHAMBER) {
                 BlockPos pos = NBTUtil.readBlockPos(data.getCompound("BlockPos"));
                 String name = data.getString("EternalName");
                 TileEntity te = sender.getEntityWorld().getTileEntity(pos);
-                if (te instanceof CryoChamberTileEntity) {
-                    CryoChamberTileEntity chamber = (CryoChamberTileEntity) te;
-                    chamber.renameEternal(name);
-                    chamber.getSkin().updateSkin(name);
-                    chamber.sendUpdates();
-                }
             }
         });
         context.setPacketHandled(true);

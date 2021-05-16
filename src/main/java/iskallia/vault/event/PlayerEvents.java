@@ -1,8 +1,6 @@
 package iskallia.vault.event;
 
 import iskallia.vault.Vault;
-import iskallia.vault.entity.EternalEntity;
-import iskallia.vault.entity.FighterEntity;
 import iskallia.vault.init.ModAttributes;
 import iskallia.vault.init.ModNetwork;
 import iskallia.vault.network.message.FighterSizeMessage;
@@ -35,9 +33,6 @@ public class PlayerEvents {
         if (target.world.isRemote)return;
 
         ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
-
-        if(target instanceof FighterEntity)ModNetwork.CHANNEL.sendTo(new FighterSizeMessage(target, ((FighterEntity)target).sizeMultiplier), player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-        if(target instanceof EternalEntity)ModNetwork.CHANNEL.sendTo(new FighterSizeMessage(target, ((EternalEntity)target).sizeMultiplier), player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
     }
 
     @SubscribeEvent
@@ -73,10 +68,6 @@ public class PlayerEvents {
         int level = PlayerVaultStatsData.get((ServerWorld)event.getPlayer().world).getVaultStats(event.getPlayer()).getVaultLevel();
         ItemStack stack = event.getPlayer().getHeldItemMainhand();
 
-        if(ModAttributes.MIN_VAULT_LEVEL.exists(stack)
-                && level < ModAttributes.MIN_VAULT_LEVEL.get(stack).get().getValue(stack)) {
-            event.setCanceled(true);
-        }
     }
 
     @SubscribeEvent
@@ -88,11 +79,6 @@ public class PlayerEvents {
             ItemStack stack = event.player.getItemStackFromSlot(slot);
             int level = PlayerVaultStatsData.get((ServerWorld)event.player.world).getVaultStats(event.player).getVaultLevel();
 
-            if(ModAttributes.MIN_VAULT_LEVEL.exists(stack)
-                    && level < ModAttributes.MIN_VAULT_LEVEL.get(stack).get().getValue(stack)) {
-                event.player.dropItem(stack.copy(), false, false);
-                stack.setCount(0);
-            }
         }
     }
 
