@@ -2,6 +2,7 @@ package iskallia.vault.event;
 
 import iskallia.vault.Vault;
 import iskallia.vault.init.*;
+import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
@@ -39,19 +40,21 @@ import java.util.Random;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EntityEvents {
-
-    @SubscribeEvent
-    public static void onEntityTick(LivingEvent.LivingUpdateEvent event) {
-        if (event.getEntity().world.isRemote
-                || !(event.getEntity() instanceof MonsterEntity)
-                || event.getEntity().world.getDimensionKey() != Vault.VAULT_KEY
-                || event.getEntity().getTags().contains("VaultScaled")) return;
-
-        MonsterEntity entity = (MonsterEntity) event.getEntity();
-
-        entity.getTags().add("VaultScaled");
-        entity.enablePersistence();
-    }
+	
+	// Gain vault levels, code modified from PlayerEx mod
+	// and add_xp vault command
+	@SubscribeEvent
+	public static void onExperiencePickup(final net.minecraftforge.event.entity.player.PlayerXpEvent.PickupXp event) {
+		PlayerEntity player = event.getPlayer();
+		
+		if(player.world.isRemote) return;
+		
+		ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+		
+		int xpAmount = event.getOrb().getXpValue();
+		
+		PlayerVaultStatsData.get(serverPlayer.getServerWorld()).addVaultExp(serverPlayer, xpAmount);
+	}
 
     @SubscribeEvent
     public static void onEntityDrops(LivingDropsEvent event) {

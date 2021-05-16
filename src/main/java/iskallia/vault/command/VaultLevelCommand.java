@@ -8,6 +8,9 @@ import iskallia.vault.world.data.PlayerResearchesData;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraftforge.fml.TextComponentMessageFormatHandler;
 
 public class VaultLevelCommand extends Command {
 
@@ -44,6 +47,9 @@ public class VaultLevelCommand extends Command {
                 Commands.literal("reset_all")
                         .executes(this::resetAll)
         );
+        
+        builder.then(
+        		Commands.literal("count_spent_pts").executes(this::countSpentPoints));
     }
 
     private int setLevel(CommandContext<CommandSource> context) throws CommandSyntaxException {
@@ -65,6 +71,13 @@ public class VaultLevelCommand extends Command {
         PlayerVaultStatsData.get(source.getWorld()).reset(source.asPlayer());
         PlayerResearchesData.get(source.getWorld()).resetResearchTree(source.asPlayer());
         return 0;
+    }
+    
+    private int countSpentPoints(CommandContext<CommandSource> context) throws CommandSyntaxException {
+    	CommandSource source = context.getSource();
+    	int spent = PlayerVaultStatsData.get(source.getWorld()).getSpentSkillPts(source.asPlayer());
+    	source.asPlayer().sendMessage(new StringTextComponent(String.valueOf(spent)), null);
+    	return 0;
     }
 
 }

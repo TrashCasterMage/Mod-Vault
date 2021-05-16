@@ -25,6 +25,17 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
     private int exp;
     private int unspentSkillPts;
     private int unspentKnowledgePts;
+    
+    /*
+     * Hopefully use this to enable locking mods until
+     * you've already spent X amount of skill points.
+     *
+     * Potential issue: Might want to lock mods based on
+     * certain number of points spent on a specific research
+     * tab. Need to worry about getting multiple tabs
+     * working before worrying about that, though.     
+     */
+    private int spentSkillPts;
 
     public PlayerVaultStats(UUID uuid) {
         this.uuid = uuid;
@@ -44,6 +55,10 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
 
     public int getUnspentKnowledgePts() {
         return unspentKnowledgePts;
+    }
+    
+    public int getSpentSkillPts() {
+    	return spentSkillPts;
     }
 
     public int getTnl() {
@@ -103,6 +118,7 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
 
     public PlayerVaultStats spendSkillPoints(MinecraftServer server, int amount) {
         this.unspentSkillPts -= amount;
+        this.spentSkillPts += amount;
 
         sync(server);
 
@@ -122,6 +138,7 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
         this.exp = 0;
         this.unspentSkillPts = 0;
         this.unspentKnowledgePts = 0;
+        this.spentSkillPts = 0;
 
         sync(server);
 

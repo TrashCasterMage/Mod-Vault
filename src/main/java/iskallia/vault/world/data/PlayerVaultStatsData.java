@@ -91,6 +91,10 @@ public class PlayerVaultStatsData extends WorldSavedData {
         markDirty();
         return this;
     }
+    
+    public int getSpentSkillPts(ServerPlayerEntity player) {
+    	return this.getVaultStats(player).getSpentSkillPts();
+    }
 
     /* ------------------------------- */
 
