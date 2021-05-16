@@ -1,7 +1,7 @@
 {
-  "itemGroup.the_vault": "The Vault",
+  "itemGroup.the_vault": "Vault Research",
   "item.the_vault.vault_burger":  "Vault Burgeri",
   "item.the_vault.skill_orbs":  "Yetenek Küresi",
-  "key.category.the_vault": "The Vault",
+  "key.category.the_vault": "Vault Research",
   "key.the_vault.open_ability_tree": "Yetenek Ağacını Görüntüle/Kapat"
 }
