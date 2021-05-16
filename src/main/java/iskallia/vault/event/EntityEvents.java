@@ -2,7 +2,6 @@ package iskallia.vault.event;
 
 import iskallia.vault.Vault;
 import iskallia.vault.init.*;
-import iskallia.vault.util.StatueType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChestBlock;
