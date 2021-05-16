@@ -61,25 +61,4 @@ public class PlayerEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void onAttack(AttackEntityEvent event) {
-        if(event.getPlayer().world.isRemote)return;
-
-        int level = PlayerVaultStatsData.get((ServerWorld)event.getPlayer().world).getVaultStats(event.getPlayer()).getVaultLevel();
-        ItemStack stack = event.getPlayer().getHeldItemMainhand();
-
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTick2(TickEvent.PlayerTickEvent event) {
-        if(event.player.world.isRemote)return;
-        EquipmentSlotType[] slots = {EquipmentSlotType.HEAD, EquipmentSlotType.CHEST, EquipmentSlotType.LEGS, EquipmentSlotType.FEET};
-
-        for(EquipmentSlotType slot: slots) {
-            ItemStack stack = event.player.getItemStackFromSlot(slot);
-            int level = PlayerVaultStatsData.get((ServerWorld)event.player.world).getVaultStats(event.player).getVaultLevel();
-
-        }
-    }
-
 }
