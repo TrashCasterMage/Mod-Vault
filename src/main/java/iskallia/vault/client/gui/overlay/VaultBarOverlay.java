@@ -54,8 +54,8 @@ public class VaultBarOverlay {
                     .anyMatch(EffectInstance::isShowIcon);
             minecraft.getTextureManager().bindTexture(RESOURCE);
             String unspentText = unspentSkillPoints == 1
-                    ? " unspent skill point"
-                    : " unspent skill points";
+                    ? " unspent research point"
+                    : " unspent research points";
             String unspentPointsText = unspentSkillPoints + "";
             int unspentPointsWidth = minecraft.fontRenderer.getStringWidth(unspentPointsText);
             int unspentWidth = minecraft.fontRenderer.getStringWidth(unspentText);

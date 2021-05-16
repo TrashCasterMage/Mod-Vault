@@ -172,8 +172,8 @@ public class SkillTreeScreen extends ContainerScreen<SkillTreeContainer> {
 			getMinecraft().getTextureManager().bindTexture(HUD_RESOURCE);
 			int toastWidth = 160;
 			int right = getMinecraft().getMainWindow().getScaledWidth();
-			String unspentText = VaultBarOverlay.unspentSkillPoints == 1 ? " unspent skill point"
-					: " unspent skill points";
+			String unspentText = VaultBarOverlay.unspentSkillPoints == 1 ? " unspent research point"
+					: " unspent research points";
 			String unspentPointsText = VaultBarOverlay.unspentSkillPoints + "";
 			int unspentPointsWidth = minecraft.fontRenderer.getStringWidth(unspentPointsText);
 			int unspentWidth = minecraft.fontRenderer.getStringWidth(unspentText);
@@ -235,7 +235,7 @@ public class SkillTreeScreen extends ContainerScreen<SkillTreeContainer> {
 		Minecraft minecraft = getMinecraft();
 
 		if (activeTab instanceof ResearchesTab) {
-			minecraft.fontRenderer.drawString(matrixStack, "Researches", containerBounds.x0, containerBounds.y0 - 12,
+			minecraft.fontRenderer.drawString(matrixStack, "Research", containerBounds.x0, containerBounds.y0 - 12,
 					0xFF_3f3f3f);
 		}
 
