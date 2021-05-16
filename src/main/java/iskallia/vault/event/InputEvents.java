@@ -46,42 +46,11 @@ public class InputEvents {
     }
 
     private static void onInput(Minecraft minecraft, int key, int action) {
-        if (minecraft.currentScreen == null && ModKeybinds.abilityWheelKey.getKey().getKeyCode() == key) {
-            if (action != GLFW.GLFW_PRESS) return;
-            ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(true));
-
-        } else if (minecraft.currentScreen == null && ModKeybinds.openAbilityTree.isPressed()) {
+        if (minecraft.currentScreen == null && ModKeybinds.openAbilityTree.isPressed()) {
             ModNetwork.CHANNEL.sendToServer(new OpenSkillTreeMessage());
 
-        } else if (minecraft.currentScreen == null && ModKeybinds.abilityKey.getKey().getKeyCode() == key) {
-            if (action == GLFW.GLFW_RELEASE) {
-                ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(true, false, false, false));
-
-            } else if (action == GLFW.GLFW_PRESS) {
-                ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(false, true, false, false));
-            }
         }
     }
 
-    @SubscribeEvent
-    public static void onMouseScroll(InputEvent.MouseScrollEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
-
-        if (minecraft.world == null) return;
-
-        double scrollDelta = event.getScrollDelta();
-
-        if (ModKeybinds.abilityKey.isKeyDown()) {
-            if (minecraft.currentScreen == null) {
-                if (scrollDelta < 0) {
-                    ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(false, false, false, true));
-
-                } else {
-                    ModNetwork.CHANNEL.sendToServer(new AbilityKeyMessage(false, false, true, false));
-                }
-            }
-            event.setCanceled(true);
-        }
-    }
 
 }
