@@ -41,21 +41,6 @@ import java.util.Random;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EntityEvents {
 	
-	// Gain vault levels, code modified from PlayerEx mod
-	// and add_xp vault command
-	@SubscribeEvent
-	public static void onExperiencePickup(final net.minecraftforge.event.entity.player.PlayerXpEvent.PickupXp event) {
-		PlayerEntity player = event.getPlayer();
-		
-		if(player.world.isRemote) return;
-		
-		ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-		
-		int xpAmount = event.getOrb().getXpValue();
-		
-		PlayerVaultStatsData.get(serverPlayer.getServerWorld()).addVaultExp(serverPlayer, xpAmount);
-	}
-
     @SubscribeEvent
     public static void onEntityDrops(LivingDropsEvent event) {
         if (event.getEntity().world.isRemote) return;

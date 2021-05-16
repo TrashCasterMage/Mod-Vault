@@ -6,6 +6,7 @@ import iskallia.vault.init.ModNetwork;
 import iskallia.vault.network.message.FighterSizeMessage;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -34,6 +35,22 @@ public class PlayerEvents {
 
         ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
     }
+    
+	// Gain vault levels, code modified from PlayerEx mod
+	// and add_xp vault command
+	@SubscribeEvent
+	public static void onExperiencePickup(final net.minecraftforge.event.entity.player.PlayerXpEvent.PickupXp event) {
+		PlayerEntity player = event.getPlayer();
+		
+		if(player.world.isRemote) return;
+		
+		ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+		
+		int xpAmount = event.getOrb().getXpValue();
+		
+		PlayerVaultStatsData.get(serverPlayer.getServerWorld()).addVaultExp(serverPlayer, xpAmount);
+	}
+
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
