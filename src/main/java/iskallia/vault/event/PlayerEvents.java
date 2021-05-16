@@ -27,16 +27,8 @@ public class PlayerEvents {
 
     public static boolean NATURAL_REGEN_OLD_VALUE = false;
     public static boolean MODIFIED_GAMERULE = false;
-
-    @SubscribeEvent
-    public static void onStartTracking(PlayerEvent.StartTracking event) {
-        Entity target = event.getTarget();
-        if (target.world.isRemote)return;
-
-        ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
-    }
     
-	// Gain vault levels, code modified from PlayerEx mod
+	// Gain vault levels from XP, code modified from PlayerEx mod
 	@SubscribeEvent
 	public static void onExperiencePickup(final net.minecraftforge.event.entity.player.PlayerXpEvent.PickupXp event) {
 		PlayerEntity player = event.getPlayer();
@@ -50,31 +42,5 @@ public class PlayerEvents {
 		PlayerVaultStatsData.get(serverPlayer.getServerWorld()).addVaultExp(serverPlayer, xpAmount);
 	}
 
-
-    @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.side == LogicalSide.CLIENT) return;
-
-        RegistryKey<World> dimensionKey = event.player.world.getDimensionKey();
-        GameRules gameRules = event.player.world.getGameRules();
-
-        if (MODIFIED_GAMERULE && dimensionKey != Vault.VAULT_KEY) {
-            gameRules.get(GameRules.NATURAL_REGENERATION).set(NATURAL_REGEN_OLD_VALUE, event.player.getServer());
-            MODIFIED_GAMERULE = false;
-            return;
-        }
-
-        if (dimensionKey != Vault.VAULT_KEY) return;
-
-        if (event.phase == TickEvent.Phase.START) {
-            NATURAL_REGEN_OLD_VALUE = gameRules.getBoolean(GameRules.NATURAL_REGENERATION);
-            gameRules.get(GameRules.NATURAL_REGENERATION).set(false, event.player.getServer());
-            MODIFIED_GAMERULE = true;
-
-        } else if (event.phase == TickEvent.Phase.END) {
-            gameRules.get(GameRules.NATURAL_REGENERATION).set(NATURAL_REGEN_OLD_VALUE, event.player.getServer());
-            MODIFIED_GAMERULE = false;
-        }
-    }
 
 }
