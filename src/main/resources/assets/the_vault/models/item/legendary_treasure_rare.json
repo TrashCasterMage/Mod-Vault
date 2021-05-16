@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "the_vault:item/legendary_treasure_rare"
-  }
-}

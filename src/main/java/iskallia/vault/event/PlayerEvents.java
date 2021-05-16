@@ -37,7 +37,6 @@ public class PlayerEvents {
     }
     
 	// Gain vault levels, code modified from PlayerEx mod
-	// and add_xp vault command
 	@SubscribeEvent
 	public static void onExperiencePickup(final net.minecraftforge.event.entity.player.PlayerXpEvent.PickupXp event) {
 		PlayerEntity player = event.getPlayer();
