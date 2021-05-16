@@ -24,18 +24,6 @@ public class RegistryEvents {
     @SubscribeEvent
     public static void onSoundRegister(RegistryEvent.Register<SoundEvent> event) {
         ModSounds.registerSounds(event);
-        ModSounds.registerSoundTypes();
-    }
-
-    @SubscribeEvent
-    public static void onStructureRegister(RegistryEvent.Register<Structure<?>> event) {
-        ModStructures.register(event);
-        ModFeatures.registerStructureFeatures();
-    }
-
-    @SubscribeEvent
-    public static void onFeatureRegister(RegistryEvent.Register<Feature<?>> event) {
-        ModFeatures.registerFeatures(event);
     }
 
     @SubscribeEvent
@@ -46,16 +34,6 @@ public class RegistryEvents {
     @SubscribeEvent
     public static void onRecipeRegister(RegistryEvent.Register<IRecipeSerializer<?>> event) {
         ModRecipes.Serializer.register(event);
-    }
-
-    @SubscribeEvent
-    public static void onEffectRegister(RegistryEvent.Register<Effect> event) {
-        ModEffects.register(event);
-    }
-
-    @SubscribeEvent
-    public static void onAttributeRegister(RegistryEvent.Register<Attribute> event) {
-        ModAttributes.register(event);
     }
 
 }

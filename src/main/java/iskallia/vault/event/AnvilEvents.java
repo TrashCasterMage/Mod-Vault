@@ -2,7 +2,6 @@ package iskallia.vault.event;
 
 import iskallia.vault.Vault;
 import iskallia.vault.config.entry.EnchantedBookEntry;
-import iskallia.vault.init.ModAttributes;
 import iskallia.vault.init.ModConfigs;
 import iskallia.vault.util.OverlevelEnchantHelper;
 import net.minecraft.enchantment.Enchantment;

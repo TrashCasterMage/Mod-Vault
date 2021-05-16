@@ -1,9 +1,7 @@
 package iskallia.vault.event;
 
 import iskallia.vault.Vault;
-import iskallia.vault.init.ModAttributes;
 import iskallia.vault.init.ModNetwork;
-import iskallia.vault.network.message.FighterSizeMessage;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

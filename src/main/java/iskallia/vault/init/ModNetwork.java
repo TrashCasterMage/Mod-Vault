@@ -70,31 +70,6 @@ public class ModNetwork {
                 AbilityActivityMessage::decode,
                 AbilityActivityMessage::handle);
 
-        CHANNEL.registerMessage(nextId(), FighterSizeMessage.class,
-                FighterSizeMessage::encode,
-                FighterSizeMessage::decode,
-                FighterSizeMessage::handle);
-
-        CHANNEL.registerMessage(nextId(), VaultBeginMessage.class,
-                VaultBeginMessage::encode,
-                VaultBeginMessage::decode,
-                VaultBeginMessage::handle);
-
-        CHANNEL.registerMessage(nextId(), VaultEscapeMessage.class,
-                VaultEscapeMessage::encode,
-                VaultEscapeMessage::decode,
-                VaultEscapeMessage::handle);
-
-        CHANNEL.registerMessage(nextId(), RenameUIMessage.class,
-                RenameUIMessage::encode,
-                RenameUIMessage::decode,
-                RenameUIMessage::handle);
-
-        CHANNEL.registerMessage(nextId(), StepHeightMessage.class,
-                StepHeightMessage::encode,
-                StepHeightMessage::decode,
-                StepHeightMessage::handle);
-
         CHANNEL.registerMessage(nextId(), AttackOffHandMessage.class,
                 AttackOffHandMessage::encode,
                 AttackOffHandMessage::decode,

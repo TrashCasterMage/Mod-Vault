@@ -1,6 +1,5 @@
 package iskallia.vault.network.message;
 
-import iskallia.vault.init.ModAttributes;
 import iskallia.vault.world.data.PlayerVaultStatsData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.CreatureAttribute;
