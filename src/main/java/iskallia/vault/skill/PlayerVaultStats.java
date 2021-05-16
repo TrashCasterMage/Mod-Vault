@@ -160,7 +160,7 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
     public void sync(MinecraftServer server) {
         NetcodeUtils.runIfPresent(server, this.uuid, player -> {
             ModNetwork.CHANNEL.sendTo(
-                    new VaultLevelMessage(this.vaultLevel, this.exp, this.getTnl(), this.unspentSkillPts, this.unspentKnowledgePts),
+                    new VaultLevelMessage(this.vaultLevel, this.exp, this.getTnl(), this.unspentSkillPts, this.unspentKnowledgePts, this.spentSkillPts),
                     player.connection.netManager,
                     NetworkDirection.PLAY_TO_CLIENT
             );
@@ -174,6 +174,7 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
         nbt.putInt("exp", exp);
         nbt.putInt("unspentSkillPts", unspentSkillPts);
         nbt.putInt("unspentKnowledgePts", unspentKnowledgePts);
+        nbt.putInt("spentSkillPts", spentSkillPts);
         return nbt;
     }
 
@@ -183,6 +184,7 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
         this.exp = nbt.getInt("exp");
         this.unspentSkillPts = nbt.getInt("unspentSkillPts");
         this.unspentKnowledgePts = nbt.getInt("unspentKnowledgePts");
+        this.spentSkillPts = nbt.getInt("spentSkillPts");
         this.vaultLevel = nbt.getInt("vaultLevel");
     }
 

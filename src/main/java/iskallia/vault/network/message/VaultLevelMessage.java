@@ -17,15 +17,17 @@ public class VaultLevelMessage {
     public int vaultExp, tnl;
     public int unspentSkillPoints;
     public int unspentKnowledgePoints;
+    public int spentSkillPoints;
 
     public VaultLevelMessage() { }
 
-    public VaultLevelMessage(int vaultLevel, int vaultExp, int tnl, int unspentSkillPoints, int unspentKnowledgePoints) {
+    public VaultLevelMessage(int vaultLevel, int vaultExp, int tnl, int unspentSkillPoints, int unspentKnowledgePoints, int spentSkillPoints) {
         this.vaultLevel = vaultLevel;
         this.vaultExp = vaultExp;
         this.tnl = tnl;
         this.unspentSkillPoints = unspentSkillPoints;
         this.unspentKnowledgePoints = unspentKnowledgePoints;
+        this.spentSkillPoints = spentSkillPoints;
     }
 
     public static void encode(VaultLevelMessage message, PacketBuffer buffer) {
@@ -34,6 +36,7 @@ public class VaultLevelMessage {
         buffer.writeInt(message.tnl);
         buffer.writeInt(message.unspentSkillPoints);
         buffer.writeInt(message.unspentKnowledgePoints);
+        buffer.writeInt(message.spentSkillPoints);
     }
 
     public static VaultLevelMessage decode(PacketBuffer buffer) {
@@ -43,6 +46,7 @@ public class VaultLevelMessage {
         message.tnl = buffer.readInt();
         message.unspentSkillPoints = buffer.readInt();
         message.unspentKnowledgePoints = buffer.readInt();
+        message.spentSkillPoints = buffer.readInt();
         return message;
     }
 
