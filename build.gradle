@@ -25,7 +25,7 @@ mixin {
 }
 
 
-def mc_version = "1.16.3"
+def mc_version = "1.16.5"
 version = "${mc_version}-1"
 
 version = '1.0.2-public'
@@ -72,7 +72,7 @@ allprojects {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${mc_version}-34.1.42"
+    minecraft "net.minecraftforge:forge:${mc_version}-36.1.0"
     annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
 }
 
