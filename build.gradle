@@ -21,7 +21,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
 mixin {
-    add sourceSets.main, "the_vault.refmap.json"
+    add sourceSets.main, "vault_research.refmap.json"
 }
 
 
@@ -29,9 +29,9 @@ def mc_version = "1.16.5"
 version = "${mc_version}-1"
 
 version = '1.0.2-public'
-group = 'iskallia.vault' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'modvault' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
-archivesBaseName = 'the_vault'
+archivesBaseName = 'vault_research'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
@@ -47,7 +47,7 @@ minecraft {
             properties 'mixin.env.disableRefMap': 'true'
             workingDirectory project.file('run')
             mods {
-                the_vault {
+                vault_research {
                     source sourceSets.main
                 }
             }
@@ -57,7 +57,7 @@ minecraft {
             properties 'mixin.env.disableRefMap': 'true'
             workingDirectory project.file('run')
             mods {
-                the_vault {
+                vault_research {
                     source sourceSets.main
                 }
             }
@@ -79,7 +79,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "TheVault",
+                "Specification-Title"     : "VaultResearch",
                 "Specification-Vendor"    : "Iskallia",
                 "Specification-Version"   : "1",
                 "Implementation-Title"    : project.name,

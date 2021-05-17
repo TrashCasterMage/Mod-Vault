@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "the_vault:item/skill_essence"
+    "layer0": "vault_research:item/skill_shard"
   }
 }

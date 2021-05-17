@@ -9,21 +9,21 @@ modLoader="javafml" #mandatory
 loaderVersion="[34,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 # The license for you mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
-license="All rights reserved"
+license="GNU General Public License v3.0"
 # A URL to refer people to when problems occur with this mod
 issueTrackerURL="https://github.com/Iskallia/Vault/issues" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
-modId="the_vault" #mandatory
+modId="vault_research" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 version="${file.jarVersion}" #mandatory
 # A display name for the mod
-displayName="The Vault" #mandatory
+displayName="Vault Research" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
 #updateJSONURL="" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="iskall85.com" #optional
+# displayURL="" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="logo2.png" #optional
 # A text field displayed in the mod UI
@@ -32,14 +32,10 @@ credits="iskall85 the architect and the incredible team behind it, Team Iskallia
 authors="KaptainWutax, iGoodie, jmilthedude, Kumara22" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Run Vaults.
-Collect Resources.
-Level up skills.
-Unlock mods.
-Get Artifacts.
+A tool for modpack makers to create a progression system.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.the_vault]] #optional
+[[dependencies.vault_research]] #optional
 # the modid of the dependency
 modId="forge" #mandatory
 # Does this dependency have to exist - if not, ordering below must be specified
@@ -51,9 +47,9 @@ ordering="NONE"
 # Side this dependency is applied on - BOTH, CLIENT or SERVER
 side="BOTH"
 # Here's another dependency
-[[dependencies.the_vault]]
+[[dependencies.vault_research]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.16.3]"
+versionRange="[1.16.5]"
 ordering="NONE"
 side="BOTH"

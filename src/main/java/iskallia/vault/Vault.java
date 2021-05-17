@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 @Mod(Vault.MOD_ID)
 public class Vault {
 
-    public static final String MOD_ID = "the_vault";
+    public static final String MOD_ID = "vault_research";
     public static final Logger LOGGER = LogManager.getLogger();
 
     public static RegistryKey<World> VAULT_KEY = RegistryKey.getOrCreateKey(Registry.WORLD_KEY, Vault.id("vault"));
