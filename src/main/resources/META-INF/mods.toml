@@ -6,12 +6,12 @@
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader="javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[34,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion="[36,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 # The license for you mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
 license="GNU General Public License v3.0"
 # A URL to refer people to when problems occur with this mod
-issueTrackerURL="https://github.com/Iskallia/Vault/issues" #optional
+issueTrackerURL="https://github.com/TrashCasterMage/Mod-Vault/issues" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
@@ -27,9 +27,9 @@ displayName="Vault Research" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="logo2.png" #optional
 # A text field displayed in the mod UI
-credits="iskall85 the architect and the incredible team behind it, Team Iskallia." #optional
+credits="Special thanks to the Iskallia dev team for making the mod that most of this mod comes from, and for making it open source!" #optional
 # A text field displayed in the mod UI
-authors="KaptainWutax, iGoodie, jmilthedude, Kumara22" #optional
+authors="TrashCasterMage, KaptainWutax, iGoodie, jmilthedude, Kumara22" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 A tool for modpack makers to create a progression system.
