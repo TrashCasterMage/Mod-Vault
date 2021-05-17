@@ -1,7 +1,6 @@
 package iskallia.vault.init;
 
 import iskallia.vault.Vault;
-import iskallia.vault.util.LazySoundType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
