@@ -19,7 +19,6 @@ import java.util.UUID;
 public class ModContainers {
 
     public static ContainerType<SkillTreeContainer> SKILL_TREE_CONTAINER;
-    public static ContainerType<KeyPressContainer> KEY_PRESS_CONTAINER;
     public static void register(RegistryEvent.Register<ContainerType<?>> event) {
         SKILL_TREE_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
             UUID uniqueID = inventory.player.getUniqueID();
@@ -28,14 +27,8 @@ public class ModContainers {
             return new SkillTreeContainer(windowId, researchTree);
         });
 
-        KEY_PRESS_CONTAINER = createContainerType((windowId, inventory, buffer) -> {
-            PlayerEntity player = inventory.player;
-            return new KeyPressContainer(windowId, player);
-        });
-
         event.getRegistry().registerAll(
-                SKILL_TREE_CONTAINER.setRegistryName("ability_tree"),
-                KEY_PRESS_CONTAINER.setRegistryName("key_press_container")
+                SKILL_TREE_CONTAINER.setRegistryName("ability_tree")
         );
 
 

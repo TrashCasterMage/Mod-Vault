@@ -10,7 +10,6 @@ public class ModScreens {
 
     public static void register(final FMLClientSetupEvent event) {
         ScreenManager.registerFactory(ModContainers.SKILL_TREE_CONTAINER, SkillTreeScreen::new);
-        ScreenManager.registerFactory(ModContainers.KEY_PRESS_CONTAINER, KeyPressScreen::new);
     }
 
     public static void registerOverlays() {
