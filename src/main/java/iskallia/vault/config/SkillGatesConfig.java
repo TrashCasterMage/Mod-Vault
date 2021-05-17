@@ -22,31 +22,15 @@ public class SkillGatesConfig extends Config {
         SKILL_GATES = new SkillGates();
         SkillGates.Entry gateEntry;
 
-
         // Researches
         gateEntry = new SkillGates.Entry();
-        gateEntry.setDependsOn("Storage Noob");
-        SKILL_GATES.addEntry("Storage Master", gateEntry);
-
-        gateEntry = new SkillGates.Entry();
-        gateEntry.setDependsOn("Storage Master");
-        SKILL_GATES.addEntry("Storage Refined", gateEntry);
-
-        gateEntry = new SkillGates.Entry();
-        gateEntry.setDependsOn("Storage Refined");
-        SKILL_GATES.addEntry("Storage Energistic", gateEntry);
-
-        gateEntry = new SkillGates.Entry();
-        gateEntry.setDependsOn("Storage Energistic");
-        SKILL_GATES.addEntry("Storage Enthusiast", gateEntry);
-
-        gateEntry = new SkillGates.Entry();
         gateEntry.setDependsOn("Decorator");
-        SKILL_GATES.addEntry("Decorator Pro", gateEntry);
-
+        SKILL_GATES.addEntry("Locked Until Decorator Unlocked", gateEntry);
+        
         gateEntry = new SkillGates.Entry();
-        gateEntry.setDependsOn("Tech Freak");
-        SKILL_GATES.addEntry("Nuclear Power", gateEntry);
+        gateEntry.setDependsOn("Backpacks!", "Organisation");
+        SKILL_GATES.addEntry("Double Locked", gateEntry);
+
     }
 
 }

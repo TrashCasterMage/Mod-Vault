@@ -48,8 +48,8 @@ public class VaultLevelCommand extends Command {
                         .executes(this::resetAll)
         );
         
-        builder.then(
-        		Commands.literal("count_spent_pts").executes(this::countSpentPoints));
+        //builder.then(
+        		//Commands.literal("count_spent_pts").executes(this::countSpentPoints));
     }
 
     private int setLevel(CommandContext<CommandSource> context) throws CommandSyntaxException {
