@@ -10,6 +10,7 @@ import net.minecraft.command.Commands;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.TextComponentMessageFormatHandler;
+import vault_research.client.gui.overlay.VaultBarOverlay;
 import vault_research.world.data.PlayerResearchesData;
 import vault_research.world.data.PlayerVaultStatsData;
 
@@ -76,7 +77,7 @@ public class VaultLevelCommand extends Command {
     
     private int countSpentPoints(CommandContext<CommandSource> context) throws CommandSyntaxException {
     	CommandSource source = context.getSource();
-    	int spent = PlayerVaultStatsData.get(source.getWorld()).getSpentSkillPts(source.asPlayer());
+    	int spent = VaultBarOverlay.spentSkillPoints;
     	source.asPlayer().sendMessage(new StringTextComponent(String.valueOf(spent)), null);
     	return 0;
     }
