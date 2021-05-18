@@ -10,7 +10,6 @@ public class ModConfigs {
     public static SkillDescriptionsConfig SKILL_DESCRIPTIONS;
     public static SkillGatesConfig SKILL_GATES;
     public static VaultLevelsConfig LEVELS_META;
-    public static OverLevelEnchantConfig OVERLEVEL_ENCHANT;
 
     public static void register() {
         RESEARCHES = (ResearchConfig) new ResearchConfig().readConfig();
@@ -18,7 +17,6 @@ public class ModConfigs {
         SKILL_DESCRIPTIONS = (SkillDescriptionsConfig) new SkillDescriptionsConfig().readConfig();
         SKILL_GATES = (SkillGatesConfig) new SkillGatesConfig().readConfig();
         LEVELS_META = (VaultLevelsConfig) new VaultLevelsConfig().readConfig();
-        OVERLEVEL_ENCHANT = (OverLevelEnchantConfig) new OverLevelEnchantConfig().readConfig();
         Vault.LOGGER.info("Vault Configs are loaded successfully!");
     }
 
