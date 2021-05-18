@@ -56,17 +56,11 @@ public class ResearchMessage {
 
             PlayerVaultStats stats = statsData.getVaultStats(sender);
 
-            int currentPoints = research.usesKnowledge()
-                    ? stats.getUnspentKnowledgePts()
-                    : stats.getUnspentSkillPts();
+            int currentPoints = stats.getUnspentSkillPts();
 
             if (currentPoints >= research.getCost()) {
                 researchesData.research(sender, research);
-                if (research.usesKnowledge()) {
-                    statsData.spendKnowledgePts(sender, research.getCost());
-                } else {
-                    statsData.spendSkillPts(sender, research.getCost());
-                }
+                statsData.spendSkillPts(sender, research.getCost());
             }
         });
         context.setPacketHandled(true);

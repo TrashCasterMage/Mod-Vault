@@ -11,7 +11,6 @@ public abstract class Research {
 
     @Expose protected String name;
     @Expose protected int cost;
-    @Expose protected boolean usesKnowledge;
     @Expose protected String gatedBy;
 
     public Research(String name, int cost) {
@@ -33,10 +32,6 @@ public abstract class Research {
 
     public String gatedBy() {
         return gatedBy;
-    }
-
-    public boolean usesKnowledge() {
-        return usesKnowledge;
     }
 
     public abstract boolean restricts(Item item, Restrictions.Type restrictionType);
