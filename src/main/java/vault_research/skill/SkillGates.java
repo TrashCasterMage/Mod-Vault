@@ -80,7 +80,7 @@ public class SkillGates {
             lockedBy.addAll(Arrays.asList(skills));
         }
         
-        public void setPpointsGate(int points) {
+        public void setPointsGate(int points) {
         	this.pointsGate = points;
         }
     }
