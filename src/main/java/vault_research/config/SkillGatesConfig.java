@@ -26,6 +26,7 @@ public class SkillGatesConfig extends Config {
         // Researches
         gateEntry = new SkillGates.Entry();
         gateEntry.setDependsOn("Decorator");
+        gateEntry.setPointsGate(30);
         SKILL_GATES.addEntry("Locked Until Decorator Unlocked", gateEntry);
         
         gateEntry = new SkillGates.Entry();

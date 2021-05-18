@@ -42,6 +42,12 @@ public class SkillGates {
         });
         return researches;
     }
+    
+    public int getLockedByPoints(String researchName) {
+    	Entry entry = entries.get(researchName);
+    	if (entry == null) return 0;
+    	return entry.pointsGate;
+    }
 
     public boolean isLocked(String researchName, ResearchTree researchTree) {
         SkillGates gates = ModConfigs.SKILL_GATES.getGates();
