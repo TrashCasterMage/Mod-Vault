@@ -65,6 +65,7 @@ public class SkillGates {
     public static class Entry {
         @Expose private List<String> dependsOn;
         @Expose private List<String> lockedBy;
+        @Expose private int pointsGate;
 
         public Entry() {
             this.dependsOn = new LinkedList<>();
@@ -77,6 +78,10 @@ public class SkillGates {
 
         public void setLockedBy(String... skills) {
             lockedBy.addAll(Arrays.asList(skills));
+        }
+        
+        public void setPpointsGate(int points) {
+        	this.pointsGate = points;
         }
     }
 
