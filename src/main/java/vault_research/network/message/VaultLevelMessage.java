@@ -58,6 +58,7 @@ public class VaultLevelMessage {
             VaultBarOverlay.tnl = message.tnl;
             VaultBarOverlay.unspentSkillPoints = message.unspentSkillPoints;
             VaultBarOverlay.unspentKnowledgePoints = message.unspentKnowledgePoints;
+            VaultBarOverlay.spentSkillPoints = message.spentSkillPoints;
 
             VaultBarOverlay.expGainedAnimation.reset();
             VaultBarOverlay.expGainedAnimation.play();

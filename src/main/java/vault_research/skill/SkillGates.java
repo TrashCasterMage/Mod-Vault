@@ -2,6 +2,7 @@ package vault_research.skill;
 
 import com.google.gson.annotations.Expose;
 
+import vault_research.client.gui.overlay.VaultBarOverlay;
 import vault_research.init.ModConfigs;
 import vault_research.research.ResearchTree;
 import vault_research.research.type.Research;
@@ -63,7 +64,11 @@ public class SkillGates {
             if (researchesDone.contains(lockedByResearch.getName()))
                 return true;
         }
-
+        
+        if (VaultBarOverlay.spentSkillPoints < getLockedByPoints(researchName)) {
+        	return true;
+        }
+        
         return false;
     }
 

@@ -25,6 +25,7 @@ public class VaultBarOverlay {
     public static int vaultExp, tnl;
     public static int unspentSkillPoints;
     public static int unspentKnowledgePoints;
+    public static int spentSkillPoints;
 
     public static AnimationTwoPhased expGainedAnimation = new AnimationTwoPhased(0f, 1f, 0f, 500);
     public static long previousTick = System.currentTimeMillis();
