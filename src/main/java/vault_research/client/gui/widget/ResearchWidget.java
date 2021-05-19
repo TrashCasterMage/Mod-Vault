@@ -20,7 +20,7 @@ public class ResearchWidget extends Widget {
 
     private static final ResourceLocation SKILL_WIDGET_RESOURCE = new ResourceLocation(Vault.MOD_ID, "textures/gui/skill-widget.png");
     private static final ResourceLocation RESEARCHES_RESOURCE = new ResourceLocation(Vault.MOD_ID, "textures/gui/researches.png");
-    private static final String ICON_PATH = "textures/research_icons/";
+    private static final String ICON_PATH = "textures/gui/research_icons/";
 
     String researchName;
     ResearchTree researchTree;
@@ -120,7 +120,7 @@ public class ResearchWidget extends Widget {
             blit(matrixStack, this.x + 3, this.y + 1,
                     10, 124, 10, 14);
         } else {
-        	blit(matrixStack, this.x, this.y, 1, 1, 14, 14);
+        	blit(matrixStack, this.x, this.y, 0, 0, 16, 16);
         }
         
         matrixStack.pop();
