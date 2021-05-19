@@ -1,5 +1,6 @@
 package vault_research.client.gui.widget;
 
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
@@ -11,7 +12,6 @@ import vault_research.client.gui.helper.Rectangle;
 import vault_research.config.entry.SkillStyle;
 import vault_research.init.ModConfigs;
 import vault_research.research.ResearchTree;
-import vault_research.util.FileUtil;
 import vault_research.util.ResourceBoundary;
 
 public class ResearchWidget extends Widget {
@@ -26,7 +26,7 @@ public class ResearchWidget extends Widget {
     ResearchTree researchTree;
     boolean locked;
     SkillStyle style;
-    ResourceLocation texture;
+    private static ResourceLocation texture;
 
     boolean selected;
 
@@ -111,10 +111,10 @@ public class ResearchWidget extends Widget {
         matrixStack.push();
         matrixStack.translate(-16 / 2f, -16 / 2f, 0);
         
-        if(texture == null && style.texture != null) {
+        if(style.texture != null) {
         	texture = new ResourceLocation(Vault.MOD_ID, ICON_PATH + style.texture + ".png");
         }
-        
+                
         Minecraft.getInstance().textureManager.bindTexture(locked ? SKILL_WIDGET_RESOURCE : texture);
         if (locked) {
             blit(matrixStack, this.x + 3, this.y + 1,
