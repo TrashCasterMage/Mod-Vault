@@ -11,6 +11,7 @@ import vault_research.client.gui.helper.Rectangle;
 import vault_research.config.entry.SkillStyle;
 import vault_research.init.ModConfigs;
 import vault_research.research.ResearchTree;
+import vault_research.util.FileUtil;
 import vault_research.util.ResourceBoundary;
 
 public class ResearchWidget extends Widget {
@@ -19,11 +20,13 @@ public class ResearchWidget extends Widget {
 
     private static final ResourceLocation SKILL_WIDGET_RESOURCE = new ResourceLocation(Vault.MOD_ID, "textures/gui/skill-widget.png");
     private static final ResourceLocation RESEARCHES_RESOURCE = new ResourceLocation(Vault.MOD_ID, "textures/gui/researches.png");
+    private static final String ICON_PATH = "textures/research_icons/";
 
     String researchName;
     ResearchTree researchTree;
     boolean locked;
     SkillStyle style;
+    ResourceLocation texture;
 
     boolean selected;
 
@@ -107,15 +110,19 @@ public class ResearchWidget extends Widget {
 
         matrixStack.push();
         matrixStack.translate(-16 / 2f, -16 / 2f, 0);
-        Minecraft.getInstance().textureManager.bindTexture(locked ? SKILL_WIDGET_RESOURCE : RESEARCHES_RESOURCE);
+        
+        if(texture == null && style.texture != null) {
+        	texture = new ResourceLocation(Vault.MOD_ID, ICON_PATH + style.texture + ".png");
+        }
+        
+        Minecraft.getInstance().textureManager.bindTexture(locked ? SKILL_WIDGET_RESOURCE : texture);
         if (locked) {
             blit(matrixStack, this.x + 3, this.y + 1,
                     10, 124, 10, 14);
         } else {
-            blit(matrixStack, this.x, this.y,
-                    style.u, style.v,
-                    16, 16);
+        	blit(matrixStack, this.x, this.y, 1, 1, 14, 14);
         }
+        
         matrixStack.pop();
     }
 
