@@ -1,6 +1,8 @@
 package vault_research.client.gui.widget;
 
 
+import java.util.HashMap;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
@@ -26,7 +28,8 @@ public class ResearchWidget extends Widget {
     ResearchTree researchTree;
     boolean locked;
     SkillStyle style;
-    private static ResourceLocation texture;
+    private ResourceLocation texture;
+    private static HashMap<String, ResourceLocation> textures = new HashMap<>();
 
     boolean selected;
 
@@ -111,11 +114,17 @@ public class ResearchWidget extends Widget {
         matrixStack.push();
         matrixStack.translate(-16 / 2f, -16 / 2f, 0);
         
-        if(style.texture != null) {
-        	texture = new ResourceLocation(Vault.MOD_ID, ICON_PATH + style.texture + ".png");
+        if(this.texture == null && style.texture != null) {
+        	if (!textures.containsKey(style.texture)) {
+            	textures.put(style.texture, new ResourceLocation(Vault.MOD_ID, ICON_PATH + style.texture + ".png"));
+            	Vault.LOGGER.debug("Added new resource location with key " + style.texture);
+        	}
+        	Vault.LOGGER.debug("Setting texture to " + textures.get(style.texture));
+        	this.texture = textures.get(style.texture);
         }
+        
                 
-        Minecraft.getInstance().textureManager.bindTexture(locked ? SKILL_WIDGET_RESOURCE : texture);
+        Minecraft.getInstance().textureManager.bindTexture(locked ? SKILL_WIDGET_RESOURCE : this.texture);
         if (locked) {
             blit(matrixStack, this.x + 3, this.y + 1,
                     10, 124, 10, 14);
