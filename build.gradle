@@ -19,7 +19,7 @@ apply plugin: 'maven-publish'
 def mc_version = "1.16.5"
 version = "${mc_version}-1"
 
-version = '1.0.2-public'
+version = '1.0.0'
 group = 'modvault' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 archivesBaseName = 'vault_research'
@@ -68,11 +68,11 @@ jar {
     manifest {
         attributes([
                 "Specification-Title"     : "VaultResearch",
-                "Specification-Vendor"    : "Iskallia",
+                "Specification-Vendor"    : "TrashCasterMage",
                 "Specification-Version"   : "1",
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : "${version}",
-                "Implementation-Vendor"   : "Iskallia",
+                "Implementation-Vendor"   : "TrashCasterMage",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
         ])
     }
