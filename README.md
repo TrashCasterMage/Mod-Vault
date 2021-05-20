@@ -8,7 +8,7 @@ You get levels in Vault Research the same way you get levels in vanilla minecraf
 
 ## For Modpack Developers
 
-Currently, Vault Research is slightly lacking in configurability. Here is the list of what you can easily change in your modpack:
+Currently, Vault Research has what I'd consider to be all the basic configurability. Here is the list of what you can easily change in your modpack:
 
 * Mods locks behind a single research
 * Cost of a single research
@@ -16,15 +16,16 @@ Currently, Vault Research is slightly lacking in configurability. Here is the li
 * Individual item locking (can lock items behind a research rather than a whole mod)
 * Prerequisite (You can have a Research remain hidden and un-researchable until they research its prerequisite)
 * Mutually exclusive research (researching one makes others un-researchable)
-
-Currently, there are some very basic things that you can't configure. These are coming in the near future, but are currently unavailable:
-* Custom icons for research
+* Custom icons for research (16x16)
 * Gating research by amount researched (i.e. a Research that can only be researched once you've spent 30 research points)
+
+There are, however, some things that you can't configure. These are coming in the near future, but are currently unavailable:
 * Multiple research tabs for organization
 * Dimension-locking based on Research
 
-For information on how to configure this mod, download the mod and go to the config folder. In there is a vault_research folder, and you can look at the following files to see examples on how to configure the mod:
+At the moment, there isn't a wiki or other guide on how to configure this mod. For information on how to configure this mod, download the mod and go to the config folder. In there is a vault_research folder, and you can look at the following files to see examples on how to configure the mod:
 * researches.json (defines cost of research, modIDs restricted, individual restrictions, and research name)
-* researches_gui_styles.json (defines position on the screen, shape (rectangle or star), and icon (u and v))
+* researches_gui_styles.json (defines position on the screen, shape (rectangle or star), and icon (texture))
 * skill_descriptions.json (descriptions for each research)
 * skill_gates.json (define prerequisites and mutual exclusivity)
+* For the resource pack, you'll want the following directory structure: assets/vault_research/textures/gui/research_icons/ In this research_icons folder you can put your textures as png files. This should follow what you put for the texture in researches_gui_styles.json. So if you have a research and you put "pizza" as the texture entry in the json, your icon should be "pizza.png."
