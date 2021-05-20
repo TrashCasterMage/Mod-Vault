@@ -26,27 +26,27 @@ public class ResearchesGUIConfig extends Config {
 		SkillStyle style;
 		this.styles = new HashMap<>();
 
-		style = new SkillStyle(0, 0, 0, 0);
+		style = new SkillStyle(0, 0, "backpacks");
 		style.frameType = SkillFrame.RECTANGULAR;
 		styles.put("Backpacks!", style);
 
-		style = new SkillStyle(50, 50, 16 * 6, 0);
+		style = new SkillStyle(50, 50, "organisation");
 		style.frameType = SkillFrame.RECTANGULAR;
 		styles.put("Organisation", style);
 
-		style = new SkillStyle(100, 0, 16 * 15, 0);
+		style = new SkillStyle(100, 0, "decorator");
 		style.frameType = SkillFrame.RECTANGULAR;
 		styles.put("Decorator", style);
 
-		style = new SkillStyle(150, 50, 0, 16);
+		style = new SkillStyle(150, 50, "ludu");
 		style.frameType = SkillFrame.RECTANGULAR;
 		styles.put("Locked Until Decorator Unlocked", style);
 
-		style = new SkillStyle(50 * 4, 0, 16 * 9, 16 * 2);
+		style = new SkillStyle(50 * 4, 0, "cre");
 		style.frameType = SkillFrame.STAR;
 		styles.put("Custom Research Example", style);
 
-		style = new SkillStyle(50 * 5, 50, 16 * 7, 16 * 2);
+		style = new SkillStyle(50 * 5, 50, "double_locked");
 		style.frameType = SkillFrame.RECTANGULAR;
 		styles.put("Double Locked", style);
 

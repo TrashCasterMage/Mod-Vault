@@ -1,5 +1,8 @@
 package vault_research.client.gui.widget;
 
+
+import java.util.HashMap;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
@@ -19,11 +22,14 @@ public class ResearchWidget extends Widget {
 
     private static final ResourceLocation SKILL_WIDGET_RESOURCE = new ResourceLocation(Vault.MOD_ID, "textures/gui/skill-widget.png");
     private static final ResourceLocation RESEARCHES_RESOURCE = new ResourceLocation(Vault.MOD_ID, "textures/gui/researches.png");
+    private static final String ICON_PATH = "textures/gui/research_icons/";
 
     String researchName;
     ResearchTree researchTree;
     boolean locked;
     SkillStyle style;
+    private ResourceLocation texture;
+    private static HashMap<String, ResourceLocation> textures = new HashMap<>();
 
     boolean selected;
 
@@ -107,15 +113,25 @@ public class ResearchWidget extends Widget {
 
         matrixStack.push();
         matrixStack.translate(-16 / 2f, -16 / 2f, 0);
-        Minecraft.getInstance().textureManager.bindTexture(locked ? SKILL_WIDGET_RESOURCE : RESEARCHES_RESOURCE);
+        
+        if(this.texture == null && style.texture != null) {
+        	if (!textures.containsKey(style.texture)) {
+            	textures.put(style.texture, new ResourceLocation(Vault.MOD_ID, ICON_PATH + style.texture + ".png"));
+            	Vault.LOGGER.debug("Added new resource location with key " + style.texture);
+        	}
+        	Vault.LOGGER.debug("Setting texture to " + textures.get(style.texture));
+        	this.texture = textures.get(style.texture);
+        }
+        
+                
+        Minecraft.getInstance().textureManager.bindTexture(locked ? SKILL_WIDGET_RESOURCE : this.texture);
         if (locked) {
             blit(matrixStack, this.x + 3, this.y + 1,
                     10, 124, 10, 14);
         } else {
-            blit(matrixStack, this.x, this.y,
-                    style.u, style.v,
-                    16, 16);
+        	blit(matrixStack, this.x, this.y, 0, 0, 16, 16, 16, 16);
         }
+        
         matrixStack.pop();
     }
 
