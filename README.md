@@ -22,6 +22,7 @@ Currently, Vault Research has what I'd consider to be all the basic configurabil
 There are, however, some things that you can't configure. These are coming in the near future, but are currently unavailable:
 * Multiple research tabs for organization
 * Dimension-locking based on Research
+* Teams System
 
 At the moment, there isn't a wiki or other guide on how to configure this mod. For information on how to configure this mod, download the mod and go to the config folder. In there is a vault_research folder, and you can look at the following files to see examples on how to configure the mod:
 * researches.json (defines cost of research, modIDs restricted, individual restrictions, and research name)
