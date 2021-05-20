@@ -129,7 +129,7 @@ public class ResearchWidget extends Widget {
             blit(matrixStack, this.x + 3, this.y + 1,
                     10, 124, 10, 14);
         } else {
-        	blit(matrixStack, this.x, this.y, 0, 0, 16, 16);
+        	blit(matrixStack, this.x, this.y, 0, 0, 16, 16, 16, 16);
         }
         
         matrixStack.pop();
