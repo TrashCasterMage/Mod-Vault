@@ -38,7 +38,7 @@ public class VaultLevelsConfig extends Config {
     // Modified the default function since leveling currently
     // uses XP pickups. First level is ~ 26 vanilla levels.
     public int defaultTNLFunction(int level) {
-        return level * 50 + 1_000;
+        return 500 + (50 * level);
     }
 
     public static class VaultLevelMeta {
