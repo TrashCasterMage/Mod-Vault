@@ -51,6 +51,8 @@ public class ResearchConfig extends Config {
         customResearch.getItemRestrictions().put("appliedenergistics2:molecular_assembler", Restrictions.forItems(true));
         customResearch.getItemRestrictions().put("mekanism:formulaic_assemblicator", Restrictions.forItems(true));
         customResearch.getItemRestrictions().put("minecraft:diamond_sword", Restrictions.forItems(true));
+        
+        customResearch.getEntityRestrictions().put("minecraft:villager", Restrictions.forEntities(true));
         this.CUSTOM_RESEARCHES.add(customResearch);
     }
 

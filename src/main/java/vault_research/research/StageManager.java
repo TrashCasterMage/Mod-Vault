@@ -11,6 +11,9 @@ import net.minecraft.util.text.*;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -183,7 +186,7 @@ public class StageManager {
         restrictedBy = researchTree.restrictedBy(blockState.getBlock(), Restrictions.Type.HITTABILITY);
         if (restrictedBy != null) {
             if (event.getSide() == LogicalSide.CLIENT) {
-                warnResearchRequirement(restrictedBy, "hit");
+                warnResearchRequirement(restrictedBy, "hit_block");
             }
             event.setCanceled(true);
             return;
@@ -208,7 +211,8 @@ public class StageManager {
 
         PlayerEntity player = event.getPlayer();
         ResearchTree researchTree = getResearchTree(player);
-        Entity entity = event.getEntity();
+        //Entity entity = event.getEntity();
+        Entity entity = event.getTarget();
 
         String restrictedBy;
 
@@ -240,14 +244,14 @@ public class StageManager {
 
         PlayerEntity player = event.getPlayer();
         ResearchTree researchTree = getResearchTree(player);
-        Entity entity = event.getEntity();
+        Entity entity = event.getTarget();
 
         String restrictedBy;
 
-        restrictedBy = researchTree.restrictedBy(entity.getType(), Restrictions.Type.ENTITY_INTERACTABILITY);
+        restrictedBy = researchTree.restrictedBy(entity.getType(), Restrictions.Type.HITTABILITY);
         if (restrictedBy != null) {
             if (player.world.isRemote) {
-                warnResearchRequirement(restrictedBy, "interact_entity");
+                warnResearchRequirement(restrictedBy, "hit_entity");
             }
             event.setCanceled(true);
             return;
@@ -265,7 +269,31 @@ public class StageManager {
             event.setCanceled(true);
         }
     }
-
+    
+    @SubscribeEvent
+    public static void onEntityAttacked(LivingAttackEvent event) {
+    	// Don't modify the event if the source of the damage wasn't a player
+    	Entity source = event.getSource().getTrueSource();
+    	if (!(source instanceof PlayerEntity)) return;
+    	
+    	Entity target = event.getEntity();
+    	
+    	PlayerEntity player = (PlayerEntity) source;
+    	ResearchTree researchTree = getResearchTree(player);
+    	
+    	String restrictedBy;
+    	
+    	// If the source was a player, we need to cancel the event if hitting that entity is restricted.
+    	restrictedBy = researchTree.restrictedBy(target.getType(), Restrictions.Type.HITTABILITY);
+    	if (restrictedBy != null) {
+    		if(player.world.isRemote) {
+    			warnResearchRequirement(restrictedBy, "hit_entity");
+    		}
+    		event.setCanceled(true);
+    		return;
+    	}
+    }
+    
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onItemTooltip(ItemTooltipEvent event) {
