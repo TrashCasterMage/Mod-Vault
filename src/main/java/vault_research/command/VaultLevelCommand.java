@@ -50,8 +50,6 @@ public class VaultLevelCommand extends Command {
                         .executes(this::resetAll)
         );
         
-        //builder.then(
-        		//Commands.literal("count_spent_pts").executes(this::countSpentPoints));
     }
 
     private int setLevel(CommandContext<CommandSource> context) throws CommandSyntaxException {
@@ -75,11 +73,5 @@ public class VaultLevelCommand extends Command {
         return 0;
     }
     
-    private int countSpentPoints(CommandContext<CommandSource> context) throws CommandSyntaxException {
-    	CommandSource source = context.getSource();
-    	int spent = VaultBarOverlay.spentSkillPoints;
-    	source.asPlayer().sendMessage(new StringTextComponent(String.valueOf(spent)), null);
-    	return 0;
-    }
 
 }
