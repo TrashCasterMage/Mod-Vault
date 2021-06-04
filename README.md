@@ -10,7 +10,7 @@ You get levels in Vault Research the same way you get levels in vanilla minecraf
 
 Currently, Vault Research has what I'd consider to be all the basic configurability. Here is the list of what you can easily change in your modpack:
 
-* Mods locks behind a single research
+* Mods locked behind a single research
 * Cost of a single research
 * Aspects locked (i.e. crafting, right-click, etc)
 * Individual item locking (can lock items behind a research rather than a whole mod)
@@ -20,7 +20,7 @@ Currently, Vault Research has what I'd consider to be all the basic configurabil
 * Gating research by amount researched (i.e. a Research that can only be researched once you've spent 30 research points)
 * Locking dimensions behind research.
 
-There are, however, some things that you can't configure. These are coming in the near future, but are currently unavailable:
+There are, however, some things that you can't configure. These are coming in the (hopefully) near future, but are currently unavailable:
 * Multiple research tabs for organization
 * Teams System
 
