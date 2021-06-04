@@ -53,6 +53,8 @@ public class ResearchConfig extends Config {
         customResearch.getItemRestrictions().put("minecraft:diamond_sword", Restrictions.forItems(true));
         
         customResearch.getEntityRestrictions().put("minecraft:villager", Restrictions.forEntities(true));
+        
+        customResearch.getBlockRestrictions().put("minecraft:furnace", Restrictions.forBlocks(true));
         this.CUSTOM_RESEARCHES.add(customResearch);
     }
 
