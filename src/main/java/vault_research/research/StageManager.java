@@ -188,7 +188,7 @@ public class StageManager {
 
         String restrictedBy;
 
-        restrictedBy = researchTree.restrictedBy(blockState.getBlock(), Restrictions.Type.HITTABILITY);
+        restrictedBy = researchTree.restrictedBy(blockState.getBlock(), Restrictions.Type.BLOCK_HITTABILITY);
         if (restrictedBy != null) {
             if (event.getSide() == LogicalSide.CLIENT) {
                 warnResearchRequirement(restrictedBy, "hit_block");
@@ -253,7 +253,7 @@ public class StageManager {
 
         String restrictedBy;
 
-        restrictedBy = researchTree.restrictedBy(entity.getType(), Restrictions.Type.HITTABILITY);
+        restrictedBy = researchTree.restrictedBy(entity.getType(), Restrictions.Type.ENTITY_HITTABILITY);
         if (restrictedBy != null) {
             if (player.world.isRemote) {
                 warnResearchRequirement(restrictedBy, "hit_entity");
@@ -309,7 +309,7 @@ public class StageManager {
     	String restrictedBy;
     	
     	// If the source was a player, we need to cancel the event if hitting that entity is restricted.
-    	restrictedBy = researchTree.restrictedBy(target.getType(), Restrictions.Type.HITTABILITY);
+    	restrictedBy = researchTree.restrictedBy(target.getType(), Restrictions.Type.ENTITY_HITTABILITY);
     	if (restrictedBy != null) {
     		if(player.world.isRemote) {
     			warnResearchRequirement(restrictedBy, "hit_entity");

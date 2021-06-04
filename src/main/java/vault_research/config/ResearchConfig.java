@@ -38,11 +38,11 @@ public class ResearchConfig extends Config {
     @Override
     protected void reset() {
         this.MOD_RESEARCHES = new LinkedList<>();
-        this.MOD_RESEARCHES.add(new ModResearch("Backpacks!", 2, "simplybackpacks").withRestrictions(false, false, false, false, true, false));
-        this.MOD_RESEARCHES.add(new ModResearch("Organisation", 3, "trashcans", "dankstorage", "pickletweaks").withRestrictions(false, false, false, false, true, false));
-        this.MOD_RESEARCHES.add(new ModResearch("Decorator", 1, "decorative_blocks", "camera", "masonry").withRestrictions(false, false, false, false, true, false));
-        this.MOD_RESEARCHES.add(new ModResearch("Locked Until Decorator Unlocked", 2, "mcwbridges", "mcwdoors", "mcwroofs", "mcwwindows", "enviromats", "blockcarpentry", "platforms").withRestrictions(false, false, false, false, true, false));
-        this.MOD_RESEARCHES.add(new ModResearch("Double Locked", 3, "create", "quark").withRestrictions(false, false, false, false, true, false));
+        this.MOD_RESEARCHES.add(new ModResearch("Backpacks!", 2, "simplybackpacks").withRestrictions(false, false, false, false, false, true, false));
+        this.MOD_RESEARCHES.add(new ModResearch("Organisation", 3, "trashcans", "dankstorage", "pickletweaks").withRestrictions(false, false, false, false, false, true, false));
+        this.MOD_RESEARCHES.add(new ModResearch("Decorator", 1, "decorative_blocks", "camera", "masonry").withRestrictions(false, false, false, false, false, true, false));
+        this.MOD_RESEARCHES.add(new ModResearch("Locked Until Decorator Unlocked", 2, "mcwbridges", "mcwdoors", "mcwroofs", "mcwwindows", "enviromats", "blockcarpentry", "platforms").withRestrictions(false, false, false, false, false, true, false));
+        this.MOD_RESEARCHES.add(new ModResearch("Double Locked", 3, "create", "quark").withRestrictions(false, false, false, false, false, true, false));
         
         this.CUSTOM_RESEARCHES = new LinkedList<>();
         CustomResearch customResearch = new CustomResearch("Custom Research Example", 100);

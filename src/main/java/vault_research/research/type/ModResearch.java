@@ -34,13 +34,15 @@ public class ModResearch extends Research {
         return restrictions;
     }
 
-    public ModResearch withRestrictions(boolean hittability,
+    public ModResearch withRestrictions(boolean blockHit,
+    									boolean entityHit,
                                         boolean entityIntr,
                                         boolean blockIntr,
                                         boolean usability,
                                         boolean craftability,
                                         boolean dimTrvl) {
-        this.restrictions.set(Restrictions.Type.HITTABILITY, hittability);
+        this.restrictions.set(Restrictions.Type.BLOCK_HITTABILITY, blockHit);
+        this.restrictions.set(Restrictions.Type.ENTITY_HITTABILITY, entityHit);
         this.restrictions.set(Restrictions.Type.ENTITY_INTERACTABILITY, entityIntr);
         this.restrictions.set(Restrictions.Type.BLOCK_INTERACTABILITY, blockIntr);
         this.restrictions.set(Restrictions.Type.USABILITY, usability);
