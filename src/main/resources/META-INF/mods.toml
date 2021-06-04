@@ -25,11 +25,11 @@ displayName="Vault Research" #mandatory
 # A URL for the "homepage" for this mod, displayed in the mod UI
 # displayURL="" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="logo2.png" #optional
+logoFile="logo4.png" #optional
 # A text field displayed in the mod UI
 credits="Special thanks to the Iskallia dev team for making the mod that most of this mod comes from, and for making it open source!" #optional
 # A text field displayed in the mod UI
-authors="TrashCasterMage, KaptainWutax, iGoodie, jmilthedude, Kumara22" #optional
+authors="KaptainWutax, iGoodie, jmilthedude, Kumara22, TrashCasterMage" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 A tool for modpack makers to create a progression system.
