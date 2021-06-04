@@ -7,16 +7,21 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -268,6 +273,26 @@ public class StageManager {
             }
             event.setCanceled(true);
         }
+    }
+    
+    @SubscribeEvent
+    public static void onPlayerChangeDimension(EntityTravelToDimensionEvent event) {   	
+    	if (!event.isCancelable()) return;
+    	Entity entity = event.getEntity();
+    	if (!(entity instanceof PlayerEntity)) return;
+    	
+    	PlayerEntity player = (PlayerEntity) entity;
+    	ResearchTree researchTree = getResearchTree(player);
+    	RegistryKey<World> dimension = event.getDimension();
+    	
+    	String restrictedBy;
+    	
+    	restrictedBy = researchTree.restrictedBy(dimension, Restrictions.Type.DIMENSION_TRAVEL);
+    	if (restrictedBy != null) {
+    		warnResearchRequirement(restrictedBy, "dimension");
+    		event.setCanceled(true);
+    		return;
+    	}
     }
     
     @SubscribeEvent

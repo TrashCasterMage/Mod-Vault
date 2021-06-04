@@ -6,6 +6,9 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -43,6 +46,15 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
 
     public void resetAll() {
         this.researchesDone.clear();
+    }
+    
+    public String restrictedBy(RegistryKey<World> dim, Restrictions.Type restrictionType) {
+    	ResourceLocation dimLoc = dim.getLocation();
+    	for (Research research : ModConfigs.RESEARCHES.getAll()) {
+    		if (researchesDone.contains(research.getName())) continue;
+    		if (research.restricts(dimLoc, restrictionType)) return research.getName();
+    	}
+    	return null;
     }
 
     public String restrictedBy(Item item, Restrictions.Type restrictionType) {

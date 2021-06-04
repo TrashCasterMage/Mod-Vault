@@ -29,6 +29,7 @@ public class Restrictions {
         restrictions.restricts.put(Type.HITTABILITY, false);
         restrictions.restricts.put(Type.BLOCK_INTERACTABILITY, false);
         restrictions.restricts.put(Type.ENTITY_INTERACTABILITY, false);
+        restrictions.restricts.put(Type.DIMENSION_TRAVEL, false);
         return restrictions;
     }
 
@@ -53,6 +54,12 @@ public class Restrictions {
         restrictions.restricts.put(Type.ENTITY_INTERACTABILITY, restricted);
         return restrictions;
     }
+    
+    public static Restrictions forDimensions(boolean restricted) {
+    	Restrictions restrictions = new Restrictions();
+    	restrictions.restricts.put(Type.DIMENSION_TRAVEL, restricted);
+    	return restrictions;
+    }
 
     public enum Type {
         USABILITY, // Right click with an item, or placement with blocks
@@ -60,6 +67,7 @@ public class Restrictions {
         HITTABILITY, // Left click on a block in the world
         BLOCK_INTERACTABILITY, // Right click on a block in the world
         ENTITY_INTERACTABILITY, // Right click on an entity in the world
+        DIMENSION_TRAVEL, // Travel to a dimension
     }
 
 }

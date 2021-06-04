@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import vault_research.research.Restrictions;
+import vault_research.research.Restrictions.Type;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -37,12 +38,14 @@ public class ModResearch extends Research {
                                         boolean entityIntr,
                                         boolean blockIntr,
                                         boolean usability,
-                                        boolean craftability) {
+                                        boolean craftability,
+                                        boolean dimTrvl) {
         this.restrictions.set(Restrictions.Type.HITTABILITY, hittability);
         this.restrictions.set(Restrictions.Type.ENTITY_INTERACTABILITY, entityIntr);
         this.restrictions.set(Restrictions.Type.BLOCK_INTERACTABILITY, blockIntr);
         this.restrictions.set(Restrictions.Type.USABILITY, usability);
         this.restrictions.set(Restrictions.Type.CRAFTABILITY, craftability);
+        this.restrictions.set(Restrictions.Type.DIMENSION_TRAVEL, dimTrvl);
         return this;
     }
 
@@ -69,5 +72,12 @@ public class ModResearch extends Research {
         if (registryName == null) return false;
         return modIds.contains(registryName.getNamespace());
     }
+
+	@Override
+	public boolean restricts(ResourceLocation dim, Type restrictionType) {
+		if (!this.restrictions.restricts(restrictionType)) return false;
+		if (dim == null) return false;
+		return modIds.contains(dim.getNamespace());
+	}
 
 }

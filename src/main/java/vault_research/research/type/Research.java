@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import vault_research.research.Restrictions;
 
 public abstract class Research {
@@ -39,5 +40,7 @@ public abstract class Research {
     public abstract boolean restricts(Block block, Restrictions.Type restrictionType);
 
     public abstract boolean restricts(EntityType<?> entityType, Restrictions.Type restrictionType);
+    
+    public abstract boolean restricts(ResourceLocation dim, Restrictions.Type restrictionType);
 
 }
