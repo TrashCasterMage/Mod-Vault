@@ -123,6 +123,24 @@ public class StageManager {
 
         event.setCanceled(true);
     }
+    
+    /*@SubscribeEvent
+    public static void onItemPickup(net.minecraftforge.event.entity.player.EntityItemPickupEvent event) {
+    	if (!event.isCancelable()) return;
+    	
+    	PlayerEntity player = event.getPlayer();
+    	ResearchTree researchTree = getResearchTree(player);
+    	
+    	Item grabbedItem = event.getItem().getItem().getItem();
+    	
+    	String restrictedBy;
+    	
+    	restrictedBy = researchTree.restrictedBy(grabbedItem, Restrictions.Type.USABILITY);
+    	if (restrictedBy == null) return;
+    	
+    	warnResearchRequirement(restrictedBy, "usage");
+    	event.setCanceled(true);
+    }*/
 
     @SubscribeEvent
     public static void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
