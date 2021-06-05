@@ -40,7 +40,8 @@ public class ModResearch extends Research {
                                         boolean blockIntr,
                                         boolean usability,
                                         boolean craftability,
-                                        boolean dimTrvl) {
+                                        boolean dimTrvl,
+                                        boolean pickup) {
         this.restrictions.set(Restrictions.Type.BLOCK_HITTABILITY, blockHit);
         this.restrictions.set(Restrictions.Type.ENTITY_HITTABILITY, entityHit);
         this.restrictions.set(Restrictions.Type.ENTITY_INTERACTABILITY, entityIntr);
@@ -48,6 +49,7 @@ public class ModResearch extends Research {
         this.restrictions.set(Restrictions.Type.USABILITY, usability);
         this.restrictions.set(Restrictions.Type.CRAFTABILITY, craftability);
         this.restrictions.set(Restrictions.Type.DIMENSION_TRAVEL, dimTrvl);
+        this.restrictions.set(Restrictions.Type.PICKUP, pickup);
         return this;
     }
 

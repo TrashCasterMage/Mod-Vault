@@ -8,20 +8,16 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,6 +30,7 @@ import vault_research.world.data.PlayerResearchesData;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
 
 @Mod.EventBusSubscriber(modid = Vault.MOD_ID)
 public class StageManager {
@@ -124,7 +121,7 @@ public class StageManager {
         event.setCanceled(true);
     }
     
-    /*@SubscribeEvent
+    @SubscribeEvent
     public static void onItemPickup(net.minecraftforge.event.entity.player.EntityItemPickupEvent event) {
     	if (!event.isCancelable()) return;
     	
@@ -135,13 +132,34 @@ public class StageManager {
     	
     	String restrictedBy;
     	
-    	restrictedBy = researchTree.restrictedBy(grabbedItem, Restrictions.Type.USABILITY);
+    	restrictedBy = researchTree.restrictedBy(grabbedItem, Restrictions.Type.PICKUP);
     	if (restrictedBy == null) return;
     	
-    	warnResearchRequirement(restrictedBy, "usage");
+    	warnResearchRequirement(restrictedBy, "pickup");
     	event.setCanceled(true);
-    }*/
-
+    }
+        
+    @SubscribeEvent
+    public static void dropRestrictedItems(net.minecraftforge.event.TickEvent.PlayerTickEvent event) {   
+    	PlayerEntity player = event.player;
+    	ResearchTree researchTree = getResearchTree(player);
+    	
+    	for(int i = 0; i < player.inventory.mainInventory.size(); i++) {
+    		ItemStack stack = player.inventory.mainInventory.get(i);
+    		if (stack.isEmpty()) continue;
+    		String restrictedBy;
+    		
+    		restrictedBy = researchTree.restrictedBy(stack.getItem(), Restrictions.Type.PICKUP);
+    		if (restrictedBy == null) continue;
+    		if (player.world.isRemote) {
+        		warnResearchRequirement(restrictedBy, "pickup");
+    		}
+    		ItemStack removed = player.inventory.removeStackFromSlot(i);
+    		player.dropItem(removed, false);
+    	}
+    	    	
+    }
+    
     @SubscribeEvent
     public static void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
         if (!event.isCancelable()) return;

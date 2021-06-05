@@ -39,7 +39,8 @@ public class Restrictions {
         restrictions.restricts.put(Type.USABILITY, restricted);
         restrictions.restricts.put(Type.CRAFTABILITY, restricted);
         restrictions.restricts.put(Type.BLOCK_HITTABILITY, restricted);
-        restrictions.restricts.put(Type.ENTITY_HITTABILITY, null);
+        restrictions.restricts.put(Type.ENTITY_HITTABILITY, restricted);
+        restrictions.restricts.put(Type.PICKUP, restricted);
         return restrictions;
     }
 
@@ -71,6 +72,7 @@ public class Restrictions {
         BLOCK_INTERACTABILITY, // Right click on a block in the world
         ENTITY_INTERACTABILITY, // Right click on an entity in the world
         DIMENSION_TRAVEL, // Travel to a dimension
+        PICKUP, // Pickup an item and keep it in your inventory
     }
 
 }
