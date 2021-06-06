@@ -10,12 +10,19 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.network.NetworkDirection;
+import vault_research.Vault;
 import vault_research.init.ModConfigs;
 import vault_research.init.ModNetwork;
 import vault_research.init.ModSounds;
 import vault_research.network.message.VaultLevelMessage;
+import vault_research.research.ResearchTree;
 import vault_research.util.NetcodeUtils;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.UUID;
 
 public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
@@ -25,22 +32,13 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
     private int exp;
     private int unspentSkillPts;
     private int unspentKnowledgePts;
-    
-    /*
-     * Hopefully use this to enable locking mods until
-     * you've already spent X amount of skill points.
-     *
-     * Potential issue: Might want to lock mods based on
-     * certain number of points spent on a specific research
-     * tab. Need to worry about getting multiple tabs
-     * working before worrying about that, though.     
-     */
     private int spentSkillPts;
-
+    
+    
     public PlayerVaultStats(UUID uuid) {
         this.uuid = uuid;
     }
-
+    
     public int getVaultLevel() {
         return vaultLevel;
     }
@@ -88,7 +86,11 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
         }
 
         if (this.vaultLevel > initialLevel) {
-            NetcodeUtils.runIfPresent(server, uuid, this::fancyLevelUpEffects);
+        	for (Entry<UUID, UUID> pair: ResearchTree.getTeamMapSet()) {
+        		if (pair.getValue().equals(this.uuid)) {
+                    NetcodeUtils.runIfPresent(server, pair.getKey(), this::fancyLevelUpEffects);
+        		}
+        	}
         }
 
         sync(server);
@@ -158,13 +160,20 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
     /* --------------------------------------- */
 
     public void sync(MinecraftServer server) {
-        NetcodeUtils.runIfPresent(server, this.uuid, player -> {
-            ModNetwork.CHANNEL.sendTo(
-                    new VaultLevelMessage(this.vaultLevel, this.exp, this.getTnl(), this.unspentSkillPts, this.unspentKnowledgePts, this.spentSkillPts),
-                    player.connection.netManager,
-                    NetworkDirection.PLAY_TO_CLIENT
-            );
-        });
+    	
+    	// ITERATE OVER ALL MEMBERS OF THE TEAM FOR THIS
+    	for (Entry<UUID, UUID> pair: ResearchTree.getTeamMapSet()) {
+    		if (pair.getValue().equals(this.uuid)) {
+    			NetcodeUtils.runIfPresent(server, pair.getKey(), player -> {
+    	            ModNetwork.CHANNEL.sendTo(
+    	                    new VaultLevelMessage(this.vaultLevel, this.exp, this.getTnl(), this.unspentSkillPts, this.unspentKnowledgePts, this.spentSkillPts),
+    	                    player.connection.netManager,
+    	                    NetworkDirection.PLAY_TO_CLIENT
+    	            );
+    	        });
+    		}
+    	}
+        
     }
 
     @Override

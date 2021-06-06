@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.UUID;
 
 public class ResearchTree implements INBTSerializable<CompoundNBT> {
@@ -45,6 +46,10 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
     	//teamMap.put(playerUUID, teamUUID);
     	
     	this.researchesDone = new LinkedList<>();
+    }
+    
+    public static Set<Entry<UUID, UUID>> getTeamMapSet() {
+    	return teamMap.entrySet();
     }
     
     public static Map<UUID, UUID> requestTeamMap() {
@@ -112,6 +117,7 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
     }
 
     public void sync(MinecraftServer server) {
+    	//throw new ArrayIndexOutOfBoundsException();
     	for(Entry<UUID, UUID> pair : teamMap.entrySet()) {
     		if (pair.getValue().equals(this.teamUUID)) {
     			NetcodeUtils.runIfPresent(server, pair.getKey(), player -> {

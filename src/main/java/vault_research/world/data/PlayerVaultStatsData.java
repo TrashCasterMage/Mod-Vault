@@ -9,6 +9,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 import vault_research.Vault;
+import vault_research.research.ResearchTree;
 import vault_research.skill.PlayerVaultStats;
 
 import java.util.HashMap;
@@ -19,7 +20,7 @@ public class PlayerVaultStatsData extends WorldSavedData {
 
     protected static final String DATA_NAME = Vault.MOD_ID + "_PlayerVaultLevels";
 
-    private Map<UUID, PlayerVaultStats> playerMap = new HashMap<>();
+    private Map<UUID, PlayerVaultStats> teamMap = new HashMap<>();
 
     public PlayerVaultStatsData() {
         super(DATA_NAME);
@@ -30,11 +31,18 @@ public class PlayerVaultStatsData extends WorldSavedData {
     }
 
     public PlayerVaultStats getVaultStats(PlayerEntity player) {
-        return getVaultStats(player.getUniqueID());
+        PlayerVaultStats stats = getVaultStats(player.getUniqueID());
+    	getVaultStats(player.getUniqueID()).sync(player.getServer());
+    	return stats;
     }
 
     public PlayerVaultStats getVaultStats(UUID uuid) {
-        return this.playerMap.computeIfAbsent(uuid, PlayerVaultStats::new);
+    	UUID teamId = ResearchTree.getOrCreateTeam(uuid);
+        return this.teamMap.computeIfAbsent(teamId, PlayerVaultStats::new);
+    }
+    
+    public PlayerVaultStats getVaultStats(String teamUUID) {
+    	return this.teamMap.computeIfAbsent(UUID.fromString(teamUUID), PlayerVaultStats::new);
     }
 
     /* ------------------------------- */
@@ -54,7 +62,7 @@ public class PlayerVaultStatsData extends WorldSavedData {
     }
 
     public PlayerVaultStatsData spendSkillPts(ServerPlayerEntity player, int amount) {
-        this.getVaultStats(player).spendSkillPoints(player.getServer(), amount);
+        this.getVaultStats(player).spendSkillPoints(player.getServer(), amount).sync(player.getServerWorld().getServer());
 
         markDirty();
         return this;
@@ -100,30 +108,30 @@ public class PlayerVaultStatsData extends WorldSavedData {
 
     @Override
     public void read(CompoundNBT nbt) {
-        ListNBT playerList = nbt.getList("PlayerEntries", Constants.NBT.TAG_STRING);
+        ListNBT teamList = nbt.getList("TeamEntries", Constants.NBT.TAG_STRING);
         ListNBT statEntries = nbt.getList("StatEntries", Constants.NBT.TAG_COMPOUND);
 
-        if (playerList.size() != statEntries.size()) {
+        if (teamList.size() != statEntries.size()) {
             throw new IllegalStateException("Map doesn't have the same amount of keys as values");
         }
 
-        for (int i = 0; i < playerList.size(); i++) {
-            UUID playerUUID = UUID.fromString(playerList.getString(i));
-            this.getVaultStats(playerUUID).deserializeNBT(statEntries.getCompound(i));
+        for (int i = 0; i < teamList.size(); i++) {
+            UUID teamUUID = UUID.fromString(teamList.getString(i));
+            this.getVaultStats(teamUUID.toString()).deserializeNBT(statEntries.getCompound(i));
         }
     }
 
     @Override
     public CompoundNBT write(CompoundNBT nbt) {
-        ListNBT playerList = new ListNBT();
+        ListNBT teamList = new ListNBT();
         ListNBT statsList = new ListNBT();
 
-        this.playerMap.forEach((uuid, stats) -> {
-            playerList.add(StringNBT.valueOf(uuid.toString()));
+        this.teamMap.forEach((uuid, stats) -> {
+            teamList.add(StringNBT.valueOf(uuid.toString()));
             statsList.add(stats.serializeNBT());
         });
 
-        nbt.put("PlayerEntries", playerList);
+        nbt.put("TeamEntries", teamList);
         nbt.put("StatEntries", statsList);
 
         return nbt;

@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.Mod;
 import vault_research.Vault;
 import vault_research.util.SideOnlyFixer;
 import vault_research.world.data.PlayerResearchesData;
+import vault_research.world.data.PlayerVaultStatsData;
 
 import java.util.Arrays;
 import java.util.List;
@@ -121,7 +122,7 @@ public class StageManager {
         event.setCanceled(true);
     }
     
-    @SubscribeEvent
+    /*@SubscribeEvent
     public static void onItemPickup(net.minecraftforge.event.entity.player.EntityItemPickupEvent event) {
     	if (!event.isCancelable()) return;
     	
@@ -137,9 +138,9 @@ public class StageManager {
     	
     	warnResearchRequirement(restrictedBy, "pickup");
     	event.setCanceled(true);
-    }
+    }*/
         
-    @SubscribeEvent
+    /*@SubscribeEvent
     public static void dropRestrictedItems(net.minecraftforge.event.TickEvent.PlayerTickEvent event) {   
     	PlayerEntity player = event.player;
     	ResearchTree researchTree = getResearchTree(player);
@@ -158,7 +159,7 @@ public class StageManager {
     		player.dropItem(removed, false);
     	}
     	    	
-    }
+    }*/
     
     @SubscribeEvent
     public static void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {

@@ -37,6 +37,7 @@ public class PlayerResearchesData extends WorldSavedData {
 
     public ResearchTree getResearches(UUID uuid) {
     	UUID teamId = ResearchTree.getOrCreateTeam(uuid);
+    	//Vault.LOGGER.debug("Got team id: " + teamId);
         return this.teamMap.computeIfAbsent(teamId, id -> new ResearchTree(id.toString()));
     }
 
@@ -73,12 +74,7 @@ public class PlayerResearchesData extends WorldSavedData {
         if (teamsList.size() != researchesList.size()) {
             throw new IllegalStateException("Map doesn't have the same amount of keys as values");
         }
-        
-        Vault.LOGGER.debug("Size of playerTeamList: " + playerTeamList.size());
-        Vault.LOGGER.debug("playerTeamList: " + playerTeamList);
-        Vault.LOGGER.debug("Size of teamsList: " + teamsList.size());
-        Vault.LOGGER.debug("teamsList: " + teamsList);
-        
+                
         Map<UUID, UUID> playerTeams = new HashMap<>();
         for (int i = 0; i < playerTeamList.size(); i++) {
         	CompoundNBT pair = playerTeamList.getCompound(i);
@@ -90,11 +86,10 @@ public class PlayerResearchesData extends WorldSavedData {
         for (int i = 0; i < playerTeamList.size(); i++) {
         	UUID playerUUID = UUID.fromString(playerTeamList.getCompound(i).getString("player"));
             //UUID teamUUID = UUID.fromString(teamsList.getString(i));
-            Vault.LOGGER.debug("Player ID from playerTeamList: " + playerUUID);
             this.getResearches(playerUUID).deserializeNBT(researchesList.getCompound(i));
             
         }
-        
+                
     }
 
     @Override
