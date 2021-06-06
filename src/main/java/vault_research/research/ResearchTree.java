@@ -12,24 +12,54 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.network.NetworkDirection;
+import vault_research.Vault;
 import vault_research.init.ModConfigs;
 import vault_research.init.ModNetwork;
 import vault_research.network.message.ResearchTreeMessage;
 import vault_research.research.type.Research;
 import vault_research.util.NetcodeUtils;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 public class ResearchTree implements INBTSerializable<CompoundNBT> {
 
-    protected UUID playerUUID;
+	// HashMap<Player, Team>
+	protected static Map<UUID, UUID> teamMap = new HashMap<>();
+    protected UUID teamUUID;
     protected List<String> researchesDone;
 
     public ResearchTree(UUID playerUUID) {
-        this.playerUUID = playerUUID;
+    	this.teamUUID = teamMap.computeIfAbsent(playerUUID, k -> UUID.randomUUID());
+        //this.playerUUID = playerUUID;
         this.researchesDone = new LinkedList<>();
+    }
+    
+    public ResearchTree(String ID) {
+    	this.teamUUID = UUID.fromString(ID);
+    	//this.teamUUID = teamUUID;
+    	//teamMap.put(playerUUID, teamUUID);
+    	
+    	this.researchesDone = new LinkedList<>();
+    }
+    
+    public static Map<UUID, UUID> requestTeamMap() {
+    	if (teamMap.isEmpty()) return null;
+    	
+    	return teamMap;
+    }
+    
+    public static boolean offerTeamMap(Map<UUID, UUID> map) {  	
+    	teamMap = map;
+    	return true;
+    }
+    
+    public static UUID getOrCreateTeam(UUID playerUUID) {
+    	return teamMap.computeIfAbsent(playerUUID, k -> UUID.randomUUID());
     }
 
     public List<String> getResearchesDone() {
@@ -82,20 +112,25 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
     }
 
     public void sync(MinecraftServer server) {
-        NetcodeUtils.runIfPresent(server, this.playerUUID, player -> {
-            ModNetwork.CHANNEL.sendTo(
-                    new ResearchTreeMessage(this, player.getUniqueID()),
-                    player.connection.netManager,
-                    NetworkDirection.PLAY_TO_CLIENT
-            );
-        });
+    	for(Entry<UUID, UUID> pair : teamMap.entrySet()) {
+    		if (pair.getValue().equals(this.teamUUID)) {
+    			NetcodeUtils.runIfPresent(server, pair.getKey(), player -> {
+    	            ModNetwork.CHANNEL.sendTo(
+    	                    new ResearchTreeMessage(this, player.getUniqueID()),
+    	                    player.connection.netManager,
+    	                    NetworkDirection.PLAY_TO_CLIENT
+    	            );
+    	        });
+    		}
+    	}
+        
     }
 
     @Override
     public CompoundNBT serializeNBT() {
         CompoundNBT nbt = new CompoundNBT();
 
-        nbt.putUniqueId("playerUUID", playerUUID);
+        nbt.putUniqueId("teamUUID", this.teamUUID);
 
         ListNBT researches = new ListNBT();
         for (int i = 0; i < researchesDone.size(); i++) {
@@ -110,7 +145,7 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
 
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
-        this.playerUUID = nbt.getUniqueId("playerUUID");
+        this.teamUUID = nbt.getUniqueId("teamUUID");
 
         ListNBT researches = nbt.getList("researches", Constants.NBT.TAG_COMPOUND);
         this.researchesDone = new LinkedList<>();

@@ -37,6 +37,7 @@ public class Vault {
     }
 
     public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+    	Vault.LOGGER.debug("Player just logged in. Getting data.");
         ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
         ServerWorld serverWorld = player.getServerWorld();
         MinecraftServer server = player.getServer();
