@@ -40,6 +40,24 @@ public class PlayerResearchesData extends WorldSavedData {
     	//Vault.LOGGER.debug("Got team id: " + teamId);
         return this.teamMap.computeIfAbsent(teamId, id -> new ResearchTree(id.toString()));
     }
+    
+    public ResearchTree forceAddResearchTree(UUID team, ResearchTree researchTree) {
+    	teamMap.put(team, researchTree);
+    	return researchTree;
+    }
+    
+    public ResearchTree cloneTeam(UUID from, UUID to) {
+    	teamMap.put(to, new ResearchTree(to, teamMap.get(from).getResearchesDone()));
+    	return teamMap.get(to);
+    }
+    
+    public ResearchTree getExistingResearch(UUID teamId) {
+    	return teamMap.get(teamId);
+    }
+    
+    public void teamDeleted(UUID teamId) {
+    	teamMap.remove(teamId);
+    }
 
     /* ------------------------------- */
 

@@ -44,6 +44,15 @@ public class PlayerVaultStatsData extends WorldSavedData {
     public PlayerVaultStats getVaultStats(String teamUUID) {
     	return this.teamMap.computeIfAbsent(UUID.fromString(teamUUID), PlayerVaultStats::new);
     }
+    
+    public PlayerVaultStats cloneTeam(UUID from, UUID to) {
+    	teamMap.put(to, new PlayerVaultStats(to, teamMap.get(from)));
+    	return teamMap.get(to);
+    }
+    
+    public void teamDeleted(UUID teamId) {
+    	teamMap.remove(teamId);
+    }
 
     /* ------------------------------- */
 

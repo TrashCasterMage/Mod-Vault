@@ -2,6 +2,7 @@ package vault_research.research;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -18,6 +19,8 @@ import vault_research.init.ModNetwork;
 import vault_research.network.message.ResearchTreeMessage;
 import vault_research.research.type.Research;
 import vault_research.util.NetcodeUtils;
+import vault_research.world.data.PlayerResearchesData;
+import vault_research.world.data.PlayerVaultStatsData;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -48,6 +51,46 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
     	this.researchesDone = new LinkedList<>();
     }
     
+    public ResearchTree(UUID teamUUID, List<String> researchesDone) {
+    	this.teamUUID = teamUUID;
+    	this.researchesDone = researchesDone;
+    }
+    
+    public static UUID joinTeam(UUID sender, UUID receiver) {
+    	UUID receiverTeamID = teamMap.get(receiver);
+    	teamMap.put(receiver, teamMap.get(sender));
+    	
+    	
+    	// returns whether or not the receiver's old team still exists
+    	if (teamMap.containsValue(receiverTeamID)) {
+    		return null;
+    	} else {
+    		return receiverTeamID;
+    	}
+    	
+    }
+    
+    public static boolean leaveTeam(ServerPlayerEntity player) {
+    	UUID playerId = player.getUniqueID();
+    	UUID team = teamMap.remove(playerId);
+    	
+    	if (!teamMap.containsValue(team)) {
+    		// The player was the only one on their team. There's no need to make them leave their team.
+    		teamMap.put(playerId, team);
+    		return false;
+    	} else {
+    		// The player had other team members. We need to copy the research and stats data into
+    		// the player's new team.
+    		UUID newTeam = UUID.randomUUID();
+    		teamMap.put(playerId, newTeam);
+    		
+    		PlayerResearchesData.get(player.getServerWorld()).cloneTeam(team, newTeam);
+    		PlayerVaultStatsData.get(player.getServerWorld()).cloneTeam(team, newTeam);
+    		
+    		return true;
+    	}
+    }
+    
     public static Set<Entry<UUID, UUID>> getTeamMapSet() {
     	return teamMap.entrySet();
     }
@@ -66,7 +109,7 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
     public static UUID getOrCreateTeam(UUID playerUUID) {
     	return teamMap.computeIfAbsent(playerUUID, k -> UUID.randomUUID());
     }
-
+    
     public List<String> getResearchesDone() {
         return researchesDone;
     }

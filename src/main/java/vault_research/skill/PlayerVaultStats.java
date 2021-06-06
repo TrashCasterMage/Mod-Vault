@@ -39,6 +39,15 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
         this.uuid = uuid;
     }
     
+    public PlayerVaultStats(UUID uuid, PlayerVaultStats stats) {
+    	this.uuid = uuid;
+    	this.vaultLevel = stats.vaultLevel;
+    	this.exp = stats.exp;
+    	this.unspentSkillPts = stats.unspentSkillPts;
+    	this.unspentKnowledgePts = stats.unspentKnowledgePts;
+    	this.spentSkillPts = stats.spentSkillPts;
+    }
+    
     public int getVaultLevel() {
         return vaultLevel;
     }
