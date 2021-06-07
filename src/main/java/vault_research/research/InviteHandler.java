@@ -45,10 +45,21 @@ public class InviteHandler {
 		
 		UUID teamId = ResearchTree.joinTeam(invite.sender, receiverId);
 		
+		PlayerResearchesData researches = PlayerResearchesData.get(receiver.getServerWorld());
+		PlayerVaultStatsData vaultStats = PlayerVaultStatsData.get(receiver.getServerWorld());
+
+		//researches.syncAll(receiver.getServer());
+		//researches.syncAll(receiver.getServer());
+		researches.getResearches(receiver).sync(receiver.getServer());
+		vaultStats.getVaultStats(receiver).sync(receiver.getServer());
+		
 		if (teamId == null) return true;
 		
-		PlayerResearchesData.get(receiver.getServerWorld()).teamDeleted(teamId);
-		PlayerVaultStatsData.get(receiver.getServerWorld()).teamDeleted(teamId);
+		researches.teamDeleted(teamId);
+		vaultStats.teamDeleted(teamId);
+		
+		//PlayerResearchesData.get(receiver.getServerWorld()).teamDeleted(teamId);
+		//PlayerVaultStatsData.get(receiver.getServerWorld()).teamDeleted(teamId);
 		
 		return true;
 	}

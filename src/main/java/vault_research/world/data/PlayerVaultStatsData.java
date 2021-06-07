@@ -5,6 +5,8 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerList;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
@@ -12,6 +14,7 @@ import vault_research.Vault;
 import vault_research.research.ResearchTree;
 import vault_research.skill.PlayerVaultStats;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -28,6 +31,13 @@ public class PlayerVaultStatsData extends WorldSavedData {
 
     public PlayerVaultStatsData(String name) {
         super(name);
+    }
+    
+    public void syncAll(MinecraftServer server) {
+    	PlayerList players = server.getPlayerList();
+    	for (ServerPlayerEntity player: players.getPlayers()) {
+    		this.getVaultStats(player).sync(server);
+    	}
     }
 
     public PlayerVaultStats getVaultStats(PlayerEntity player) {

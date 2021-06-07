@@ -2,11 +2,15 @@ package vault_research.research;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.command.arguments.ComponentArgument;
+import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.STitlePacket;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
@@ -58,6 +62,14 @@ public class StageManager {
         TextComponent text = new TranslationTextComponent("overlay.requires_research." + i18nKey, name);
 
         Minecraft.getInstance().ingameGUI.setOverlayMessage(text, false);
+    }
+    
+    private static TranslationTextComponent getResearchWarning(String researchName, String il8nKey) {
+    	TextComponent name = new StringTextComponent(researchName);
+    	Style style = Style.EMPTY.setColor(Color.fromInt(0xFF_fce336));
+    	name.setStyle(style);
+    	
+    	return new TranslationTextComponent("overlay.requires_research." + il8nKey, name);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -322,14 +334,19 @@ public class StageManager {
     	ResearchTree researchTree = getResearchTree(player);
     	RegistryKey<World> dimension = event.getDimension();
     	
+    	
     	String restrictedBy;
     	
     	restrictedBy = researchTree.restrictedBy(dimension, Restrictions.Type.DIMENSION_TRAVEL);
     	if (restrictedBy != null) {
-    		warnResearchRequirement(restrictedBy, "dimension");
+        	//warnResearchRequirement(restrictedBy, "dimension");
+    		
+        	ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+        	serverPlayer.connection.sendPacket(new STitlePacket(STitlePacket.Type.ACTIONBAR, getResearchWarning(restrictedBy, "dimension")));
+    		
     		event.setCanceled(true);
-    		return;
     	}
+    	
     }
     
     @SubscribeEvent

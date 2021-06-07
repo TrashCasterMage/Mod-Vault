@@ -10,6 +10,8 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import vault_research.research.InviteHandler;
 import vault_research.research.ResearchTree;
+import vault_research.world.data.PlayerResearchesData;
+import vault_research.world.data.PlayerVaultStatsData;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
@@ -57,7 +59,7 @@ public class TeamCommand extends Command{
 	}
 	
 	private int invitePlayer(CommandContext<CommandSource> context) throws CommandSyntaxException {
-		
+				
 		ServerPlayerEntity receiver = EntityArgument.getPlayer(context, "target");
 		ServerPlayerEntity sender = context.getSource().asPlayer();
 				
@@ -69,12 +71,14 @@ public class TeamCommand extends Command{
 		
 		boolean inviteCreated = InviteHandler.invitePlayer(sender.getUniqueID(), receiver.getUniqueID());
 		
+		//ADD CHECK FOR IF PLAYERS ARE ALREADY SAME TEAM
+		
 		if (!inviteCreated) {			
 			throw new CommandException(new StringTextComponent("Could not send invite: Player already has a pending invite. Ask them to decline their current invite."));
 			//messageableSender.sendMessage(new StringTextComponent("Could not send invite. Player already has a pending invite!"), null);
 		} else {
 			sendMessage(sender, "Invite sent!");
-			sendMessage(receiver, "You've received a team invite from " + sender.getScoreboardName() + ". Do \"/vault_research team accept\" to accept, or \"/vaultresearch team decline\" to decline");
+			sendMessage(receiver, "You've received a team invite from " + sender.getScoreboardName() + ".\nDo \"/vault_research team accept\" to accept, or \"/vault_research team decline\" to decline");
 			//sender.sendMessage(new StringTextComponent("Invite sent!"), nid);
 			//receiver.sendMessage(new StringTextComponent("You've received a team invite from " + sender.getScoreboardName() + ". Do \"/vault_research team accept\" to accept, or \"/vaultresearch team decline\" to decline"), sender.getUniqueID());
 		}
@@ -117,6 +121,12 @@ public class TeamCommand extends Command{
 		boolean success = ResearchTree.leaveTeam(player);
 		
 		if (success) {
+			PlayerResearchesData researches = PlayerResearchesData.get(player.getServerWorld());
+			PlayerVaultStatsData vaultStats = PlayerVaultStatsData.get(player.getServerWorld());
+
+			researches.getResearches(player).sync(player.getServer());
+			vaultStats.getVaultStats(player).sync(player.getServer());
+			
 			sendMessage(player, "Successfully left your team!");
 			//player.sendMessage(new StringTextComponent("Successfully left your team!"), null);
 		} else {

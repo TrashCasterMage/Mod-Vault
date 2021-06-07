@@ -6,6 +6,8 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerList;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
@@ -39,6 +41,13 @@ public class PlayerResearchesData extends WorldSavedData {
     	UUID teamId = ResearchTree.getOrCreateTeam(uuid);
     	//Vault.LOGGER.debug("Got team id: " + teamId);
         return this.teamMap.computeIfAbsent(teamId, id -> new ResearchTree(id.toString()));
+    }
+    
+    public void syncAll(MinecraftServer server) {
+    	PlayerList players = server.getPlayerList();
+    	for (ServerPlayerEntity player: players.getPlayers()) {
+    		this.getResearches(player).sync(server);
+    	}
     }
     
     public ResearchTree forceAddResearchTree(UUID team, ResearchTree researchTree) {
