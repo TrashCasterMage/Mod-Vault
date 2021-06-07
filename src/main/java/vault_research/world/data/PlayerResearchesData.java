@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.server.MinecraftServer;
@@ -101,6 +102,7 @@ public class PlayerResearchesData extends WorldSavedData {
         if (teamsList.size() != researchesList.size()) {
             throw new IllegalStateException("Map doesn't have the same amount of keys as values");
         }
+
                 
         Map<UUID, UUID> playerTeams = new HashMap<>();
         for (int i = 0; i < playerTeamList.size(); i++) {
@@ -113,7 +115,11 @@ public class PlayerResearchesData extends WorldSavedData {
         for (int i = 0; i < playerTeamList.size(); i++) {
         	UUID playerUUID = UUID.fromString(playerTeamList.getCompound(i).getString("player"));
             //UUID teamUUID = UUID.fromString(teamsList.getString(i));
-            this.getResearches(playerUUID).deserializeNBT(researchesList.getCompound(i));
+        	CompoundNBT listItem = researchesList.getCompound(i);
+        	
+        	if (listItem == null || listItem.isEmpty()) continue;
+        	
+            this.getResearches(playerUUID).deserializeNBT(listItem);
             
         }
                 

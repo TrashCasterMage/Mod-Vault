@@ -160,7 +160,6 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
     }
 
     public void sync(MinecraftServer server) {
-    	//throw new ArrayIndexOutOfBoundsException();
     	for(Entry<UUID, UUID> pair : teamMap.entrySet()) {
     		if (pair.getValue().equals(this.teamUUID)) {
     			NetcodeUtils.runIfPresent(server, pair.getKey(), player -> {
