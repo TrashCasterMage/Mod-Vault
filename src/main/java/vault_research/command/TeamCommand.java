@@ -1,5 +1,7 @@
 package vault_research.command;
 
+import java.util.UUID;
+
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -8,10 +10,15 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import vault_research.research.InviteHandler;
 import vault_research.research.ResearchTree;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Util;
 
 public class TeamCommand extends Command{
+	
+	public static UUID nid = Util.DUMMY_UUID;
 
 	@Override
 	public String getName() {
@@ -53,31 +60,40 @@ public class TeamCommand extends Command{
 		
 		ServerPlayerEntity receiver = EntityArgument.getPlayer(context, "target");
 		ServerPlayerEntity sender = context.getSource().asPlayer();
-		
+				
 		if (sender.getUniqueID().equals(receiver.getUniqueID())) {
-			sender.sendMessage(new StringTextComponent("Tried to invite yourself!"), null);
-			return 0;
+			throw new CommandException(new StringTextComponent("Can't invite yourself to your own party."));
+			//messageableSender.sendFeedback(new StringTextComponent("Tried to invite yourself!"), true);
+			//return 0;
 		}
 		
 		boolean inviteCreated = InviteHandler.invitePlayer(sender.getUniqueID(), receiver.getUniqueID());
 		
-		if (!inviteCreated) {
-			sender.sendMessage(new StringTextComponent("Could not send invite. Player already has a pending invite!"), null);
+		if (!inviteCreated) {			
+			throw new CommandException(new StringTextComponent("Could not send invite: Player already has a pending invite. Ask them to decline their current invite."));
+			//messageableSender.sendMessage(new StringTextComponent("Could not send invite. Player already has a pending invite!"), null);
 		} else {
-			sender.sendMessage(new StringTextComponent("Invite sent"), null);
-			
-			receiver.sendMessage(new StringTextComponent("You've received a team invite from " + sender.getScoreboardName() + ". Do \"/vault_research team accept\" to accept, or \"/vaultresearch team decline\" to decline"), sender.getUniqueID());
+			sendMessage(sender, "Invite sent!");
+			sendMessage(receiver, "You've received a team invite from " + sender.getScoreboardName() + ". Do \"/vault_research team accept\" to accept, or \"/vaultresearch team decline\" to decline");
+			//sender.sendMessage(new StringTextComponent("Invite sent!"), nid);
+			//receiver.sendMessage(new StringTextComponent("You've received a team invite from " + sender.getScoreboardName() + ". Do \"/vault_research team accept\" to accept, or \"/vaultresearch team decline\" to decline"), sender.getUniqueID());
 		}
 		
 		return 0;
 	}
 	
+	private void sendMessage(PlayerEntity player, String msg) {
+		player.sendMessage(new StringTextComponent(msg), nid);
+	}
+	
 	private int acceptInvite(CommandContext<CommandSource> context) throws CommandSyntaxException {
 		boolean success = InviteHandler.acceptInvite(context.getSource().asPlayer());
 		if (success) {
-			context.getSource().asPlayer().sendMessage(new StringTextComponent("Successfully joined team."), null);
+			sendMessage(context.getSource().asPlayer(), "Successfully joined team.");
+			//context.getSource().asPlayer().sendMessage(new StringTextComponent("Successfully joined team."), null);
 		} else {
-			context.getSource().asPlayer().sendMessage(new StringTextComponent("Failed to join team. Did your invite expire?"), null);
+			throw new CommandException(new StringTextComponent("Failed to join team: You have no pending invites."));
+			//context.getSource().asPlayer().sendMessage(new StringTextComponent("Failed to join team. Did your invite expire?"), null);
 		}
 		return 0;
 	}
@@ -86,9 +102,11 @@ public class TeamCommand extends Command{
 		boolean success = InviteHandler.declineInvite(context.getSource().asPlayer().getUniqueID());
 		
 		if(success) {
-			context.getSource().asPlayer().sendMessage(new StringTextComponent("Declined team invite."), null);
+			sendMessage(context.getSource().asPlayer(), "Declined team invite.");
+			//context.getSource().asPlayer().sendMessage(new StringTextComponent("Declined team invite."), null);
 		} else {
-			context.getSource().asPlayer().sendMessage(new StringTextComponent("No invite available to decline. Did it expire?"), null);
+			throw new CommandException(new StringTextComponent("Failed to decline invite: You have no pending invites."));
+			//context.getSource().asPlayer().sendMessage(new StringTextComponent("No invite available to decline. Did it expire?"), null);
 		}
 		return 0;
 	}
@@ -99,9 +117,11 @@ public class TeamCommand extends Command{
 		boolean success = ResearchTree.leaveTeam(player);
 		
 		if (success) {
-			player.sendMessage(new StringTextComponent("Successfully left your team!"), null);
+			sendMessage(player, "Successfully left your team!");
+			//player.sendMessage(new StringTextComponent("Successfully left your team!"), null);
 		} else {
-			player.sendMessage(new StringTextComponent("Failed to leave team: You're not on a team."), null);
+			throw new CommandException(new StringTextComponent("Failed to leave team: You're the only one on your team."));
+			//player.sendMessage(new StringTextComponent("Failed to leave team: You're not on a team."), null);
 		}
 		return 0;
 	}
