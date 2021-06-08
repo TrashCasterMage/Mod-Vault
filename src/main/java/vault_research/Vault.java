@@ -11,7 +11,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import vault_research.config.MiscConfig;
 import vault_research.init.ModCommands;
 import vault_research.world.data.PlayerResearchesData;
 import vault_research.world.data.PlayerVaultStatsData;
@@ -30,6 +33,8 @@ public class Vault {
     public Vault() {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, this::onCommandRegister);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, this::onPlayerLoggedIn);
+        
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, MiscConfig.COMMON_SPEC);
     }
     
     public void onCommandRegister(RegisterCommandsEvent event) {
