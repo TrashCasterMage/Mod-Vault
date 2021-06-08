@@ -56,6 +56,11 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
     	this.researchesDone = researchesDone;
     }
     
+    public static boolean onSameTeam(UUID player1, UUID player2) {
+    	if (teamMap.get(player1).equals(teamMap.get(player2))) return true;
+    	return false;
+    }
+    
     public static UUID joinTeam(UUID sender, UUID receiver) {
     	UUID receiverTeamID = teamMap.remove(receiver);
     	teamMap.put(receiver, teamMap.get(sender));
