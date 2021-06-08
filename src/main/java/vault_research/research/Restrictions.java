@@ -40,7 +40,7 @@ public class Restrictions {
         restrictions.restricts.put(Type.CRAFTABILITY, restricted);
         restrictions.restricts.put(Type.BLOCK_HITTABILITY, restricted);
         restrictions.restricts.put(Type.ENTITY_HITTABILITY, restricted);
-        restrictions.restricts.put(Type.PICKUP, restricted);
+        //restrictions.restricts.put(Type.PICKUP, restricted);
         return restrictions;
     }
 
