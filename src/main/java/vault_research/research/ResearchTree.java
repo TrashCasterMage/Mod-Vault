@@ -57,7 +57,7 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
     }
     
     public static UUID joinTeam(UUID sender, UUID receiver) {
-    	UUID receiverTeamID = teamMap.get(receiver);
+    	UUID receiverTeamID = teamMap.remove(receiver);
     	teamMap.put(receiver, teamMap.get(sender));
     	
     	
@@ -96,8 +96,6 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
     }
     
     public static Map<UUID, UUID> requestTeamMap() {
-    	if (teamMap.isEmpty()) return null;
-    	
     	return teamMap;
     }
     

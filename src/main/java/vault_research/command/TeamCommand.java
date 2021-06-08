@@ -127,6 +127,9 @@ public class TeamCommand extends Command{
 			researches.getResearches(player).sync(player.getServer());
 			vaultStats.getVaultStats(player).sync(player.getServer());
 			
+			researches.markDirty();
+			vaultStats.markDirty();
+			
 			sendMessage(player, "Successfully left your team!");
 			//player.sendMessage(new StringTextComponent("Successfully left your team!"), null);
 		} else {

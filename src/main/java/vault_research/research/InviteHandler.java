@@ -53,6 +53,9 @@ public class InviteHandler {
 		researches.getResearches(receiver).sync(receiver.getServer());
 		vaultStats.getVaultStats(receiver).sync(receiver.getServer());
 		
+		vaultStats.markDirty();
+		researches.markDirty();
+		
 		if (teamId == null) return true;
 		
 		researches.teamDeleted(teamId);
