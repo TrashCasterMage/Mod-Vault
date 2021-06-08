@@ -51,7 +51,7 @@ public class ResearchMessage {
 
             ResearchTree researchTree = researchesData.getResearches(sender);
 
-            if (ModConfigs.SKILL_GATES.getGates().isLocked(research.getName(), researchTree))
+            if (ModConfigs.SKILL_GATES.getGates().isLocked(statsData.getVaultStats(sender), research.getName(), researchTree))
                 return; // Cannot upgrade locked skill...
 
             PlayerVaultStats stats = statsData.getVaultStats(sender);
@@ -62,6 +62,9 @@ public class ResearchMessage {
                 researchesData.research(sender, research);
                 statsData.spendSkillPts(sender, research.getCost());
             }
+            
+            researchTree.sync(sender.getServer());
+            stats.sync(sender.getServer());
         });
         context.setPacketHandled(true);
     }

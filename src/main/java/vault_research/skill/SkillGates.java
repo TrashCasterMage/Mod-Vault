@@ -71,6 +71,28 @@ public class SkillGates {
         
         return false;
     }
+    
+    public boolean isLocked(PlayerVaultStats stats, String researchName, ResearchTree researchTree) {
+    	SkillGates gates = ModConfigs.SKILL_GATES.getGates();
+
+        List<String> researchesDone = researchTree.getResearchesDone();
+
+        for (Research dependencyResearch : gates.getDependencyResearches(researchName)) {
+            if (!researchesDone.contains(dependencyResearch.getName()))
+                return true;
+        }
+
+        for (Research lockedByResearch : gates.getLockedByResearches(researchName)) {
+            if (researchesDone.contains(lockedByResearch.getName()))
+                return true;
+        }
+        
+        if (stats.getSpentSkillPts() < getLockedByPoints(researchName)) {
+        	return true;
+        }
+        
+        return false;
+    }
 
 
     public static class Entry {

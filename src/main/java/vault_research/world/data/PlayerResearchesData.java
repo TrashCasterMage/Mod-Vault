@@ -1,10 +1,14 @@
 package vault_research.world.data;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerList;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
@@ -20,7 +24,7 @@ public class PlayerResearchesData extends WorldSavedData {
 
     protected static final String DATA_NAME = Vault.MOD_ID + "_PlayerResearches";
 
-    private Map<UUID, ResearchTree> playerMap = new HashMap<>();
+    private Map<UUID, ResearchTree> teamMap = new HashMap<>();
 
     public PlayerResearchesData() {
         super(DATA_NAME);
@@ -35,7 +39,33 @@ public class PlayerResearchesData extends WorldSavedData {
     }
 
     public ResearchTree getResearches(UUID uuid) {
-        return this.playerMap.computeIfAbsent(uuid, ResearchTree::new);
+    	UUID teamId = ResearchTree.getOrCreateTeam(uuid);
+        return this.teamMap.computeIfAbsent(teamId, id -> new ResearchTree(id.toString()));
+    }
+    
+    public void syncAll(MinecraftServer server) {
+    	PlayerList players = server.getPlayerList();
+    	for (ServerPlayerEntity player: players.getPlayers()) {
+    		this.getResearches(player).sync(server);
+    	}
+    }
+    
+    public ResearchTree forceAddResearchTree(UUID team, ResearchTree researchTree) {
+    	teamMap.put(team, researchTree);
+    	return researchTree;
+    }
+    
+    public ResearchTree cloneTeam(UUID from, UUID to) {
+    	teamMap.put(to, new ResearchTree(to, teamMap.get(from).getResearchesDone()));
+    	return teamMap.get(to);
+    }
+    
+    public ResearchTree getExistingResearch(UUID teamId) {
+    	return teamMap.get(teamId);
+    }
+    
+    public void teamDeleted(UUID teamId) {
+    	teamMap.remove(teamId);
     }
 
     /* ------------------------------- */
@@ -64,31 +94,59 @@ public class PlayerResearchesData extends WorldSavedData {
 
     @Override
     public void read(CompoundNBT nbt) {
-        ListNBT playerList = nbt.getList("PlayerEntries", Constants.NBT.TAG_STRING);
+        ListNBT teamsList = nbt.getList("TeamEntries", Constants.NBT.TAG_STRING);
         ListNBT researchesList = nbt.getList("ResearchEntries", Constants.NBT.TAG_COMPOUND);
+        ListNBT playerTeamList = nbt.getList("PlayerTeamEntries", Constants.NBT.TAG_COMPOUND);
 
-        if (playerList.size() != researchesList.size()) {
+        if (teamsList.size() != researchesList.size()) {
             throw new IllegalStateException("Map doesn't have the same amount of keys as values");
         }
 
-        for (int i = 0; i < playerList.size(); i++) {
-            UUID playerUUID = UUID.fromString(playerList.getString(i));
-            this.getResearches(playerUUID).deserializeNBT(researchesList.getCompound(i));
+                
+        Map<UUID, UUID> playerTeams = new HashMap<>();
+        for (int i = 0; i < playerTeamList.size(); i++) {
+        	CompoundNBT pair = playerTeamList.getCompound(i);
+        	playerTeams.put(UUID.fromString(pair.get("player").getString()), UUID.fromString(pair.get("team").getString()));
         }
+        
+        ResearchTree.offerTeamMap(playerTeams);
+
+        for (int i = 0; i < playerTeamList.size(); i++) {
+        	UUID playerUUID = UUID.fromString(playerTeamList.getCompound(i).getString("player"));
+            //UUID teamUUID = UUID.fromString(teamsList.getString(i));
+        	CompoundNBT listItem = researchesList.getCompound(i);
+        	
+        	if (listItem == null || listItem.isEmpty()) continue;
+        	
+            this.getResearches(playerUUID).deserializeNBT(listItem);
+            
+        }
+                
     }
 
     @Override
     public CompoundNBT write(CompoundNBT nbt) {
-        ListNBT playerList = new ListNBT();
+        ListNBT teamsList = new ListNBT();
         ListNBT researchesList = new ListNBT();
+        ListNBT playerTeamList = new ListNBT();
+        
+        Map<UUID, UUID> teams = ResearchTree.requestTeamMap();
 
-        this.playerMap.forEach((uuid, researchTree) -> {
-            playerList.add(StringNBT.valueOf(uuid.toString()));
+        this.teamMap.forEach((uuid, researchTree) -> {
+            teamsList.add(StringNBT.valueOf(uuid.toString()));
             researchesList.add(researchTree.serializeNBT());
         });
+        
+        teams.forEach((player, team) -> {
+        	CompoundNBT pair = new CompoundNBT();
+        	pair.put("player", StringNBT.valueOf(player.toString()));
+        	pair.put("team", StringNBT.valueOf(team.toString()));
+        	playerTeamList.add(pair);
+        });
 
-        nbt.put("PlayerEntries", playerList);
+        nbt.put("TeamEntries", teamsList);
         nbt.put("ResearchEntries", researchesList);
+        nbt.put("PlayerTeamEntries", playerTeamList);
 
         return nbt;
     }

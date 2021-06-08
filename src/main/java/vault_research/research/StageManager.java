@@ -2,26 +2,26 @@ package vault_research.research;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.command.arguments.ComponentArgument;
+import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.server.STitlePacket;
 import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
-import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,10 +30,12 @@ import net.minecraftforge.fml.common.Mod;
 import vault_research.Vault;
 import vault_research.util.SideOnlyFixer;
 import vault_research.world.data.PlayerResearchesData;
+import vault_research.world.data.PlayerVaultStatsData;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
 
 @Mod.EventBusSubscriber(modid = Vault.MOD_ID)
 public class StageManager {
@@ -60,6 +62,14 @@ public class StageManager {
         TextComponent text = new TranslationTextComponent("overlay.requires_research." + i18nKey, name);
 
         Minecraft.getInstance().ingameGUI.setOverlayMessage(text, false);
+    }
+    
+    private static TranslationTextComponent getResearchWarning(String researchName, String il8nKey) {
+    	TextComponent name = new StringTextComponent(researchName);
+    	Style style = Style.EMPTY.setColor(Color.fromInt(0xFF_fce336));
+    	name.setStyle(style);
+    	
+    	return new TranslationTextComponent("overlay.requires_research." + il8nKey, name);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -123,7 +133,46 @@ public class StageManager {
 
         event.setCanceled(true);
     }
-
+    
+    /*@SubscribeEvent
+    public static void onItemPickup(net.minecraftforge.event.entity.player.EntityItemPickupEvent event) {
+    	if (!event.isCancelable()) return;
+    	
+    	PlayerEntity player = event.getPlayer();
+    	ResearchTree researchTree = getResearchTree(player);
+    	
+    	Item grabbedItem = event.getItem().getItem().getItem();
+    	
+    	String restrictedBy;
+    	
+    	restrictedBy = researchTree.restrictedBy(grabbedItem, Restrictions.Type.PICKUP);
+    	if (restrictedBy == null) return;
+    	
+    	warnResearchRequirement(restrictedBy, "pickup");
+    	event.setCanceled(true);
+    }*/
+        
+    /*@SubscribeEvent
+    public static void dropRestrictedItems(net.minecraftforge.event.TickEvent.PlayerTickEvent event) {   
+    	PlayerEntity player = event.player;
+    	ResearchTree researchTree = getResearchTree(player);
+    	
+    	for(int i = 0; i < player.inventory.mainInventory.size(); i++) {
+    		ItemStack stack = player.inventory.mainInventory.get(i);
+    		if (stack.isEmpty()) continue;
+    		String restrictedBy;
+    		
+    		restrictedBy = researchTree.restrictedBy(stack.getItem(), Restrictions.Type.PICKUP);
+    		if (restrictedBy == null) continue;
+    		if (player.world.isRemote) {
+        		warnResearchRequirement(restrictedBy, "pickup");
+    		}
+    		ItemStack removed = player.inventory.removeStackFromSlot(i);
+    		player.dropItem(removed, false);
+    	}
+    	    	
+    }*/
+    
     @SubscribeEvent
     public static void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
         if (!event.isCancelable()) return;
@@ -285,14 +334,19 @@ public class StageManager {
     	ResearchTree researchTree = getResearchTree(player);
     	RegistryKey<World> dimension = event.getDimension();
     	
+    	
     	String restrictedBy;
     	
     	restrictedBy = researchTree.restrictedBy(dimension, Restrictions.Type.DIMENSION_TRAVEL);
     	if (restrictedBy != null) {
-    		warnResearchRequirement(restrictedBy, "dimension");
+        	//warnResearchRequirement(restrictedBy, "dimension");
+    		
+        	ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+        	serverPlayer.connection.sendPacket(new STitlePacket(STitlePacket.Type.ACTIONBAR, getResearchWarning(restrictedBy, "dimension")));
+    		
     		event.setCanceled(true);
-    		return;
     	}
+    	
     }
     
     @SubscribeEvent
