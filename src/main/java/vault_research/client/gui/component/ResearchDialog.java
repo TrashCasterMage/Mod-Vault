@@ -9,6 +9,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import vault_research.client.gui.helper.FontHelper;
 import vault_research.client.gui.helper.Rectangle;
 import vault_research.client.gui.helper.UIHelper;
@@ -46,8 +47,8 @@ public class ResearchDialog extends AbstractGui {
 
 			Research research = ModConfigs.RESEARCHES.getByName(researchName);
 
-			String buttonText = researchTree.isResearched(researchName) ? "Researched"
-					: "Research (" + research.getCost() + ")";
+			String buttonText = researchTree.isResearched(researchName) ? new TranslationTextComponent("dialog.research.already_unlocked").getString()
+					: new TranslationTextComponent("dialog.research.unlock").getString() + " (" + research.getCost() + ")";
 
 			this.researchButton = new Button(10, bounds.getHeight() - 40, bounds.getWidth() - 30, 20,
 					new StringTextComponent(buttonText), (button) -> {

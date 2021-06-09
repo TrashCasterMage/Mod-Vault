@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import vault_research.Vault;
@@ -173,8 +174,8 @@ public class SkillTreeScreen extends ContainerScreen<SkillTreeContainer> {
 			getMinecraft().getTextureManager().bindTexture(HUD_RESOURCE);
 			int toastWidth = 160;
 			int right = getMinecraft().getMainWindow().getScaledWidth();
-			String unspentText = VaultBarOverlay.unspentSkillPoints == 1 ? " unspent research point"
-					: " unspent research points";
+			String unspentText = VaultBarOverlay.unspentSkillPoints == 1 ? new TranslationTextComponent("overlay.unspent_points.singular").getString()
+					: new TranslationTextComponent("overlay.unspent_points.plural").getString();
 			String unspentPointsText = VaultBarOverlay.unspentSkillPoints + "";
 			int unspentPointsWidth = minecraft.fontRenderer.getStringWidth(unspentPointsText);
 			int unspentWidth = minecraft.fontRenderer.getStringWidth(unspentText);
@@ -236,13 +237,15 @@ public class SkillTreeScreen extends ContainerScreen<SkillTreeContainer> {
 		Minecraft minecraft = getMinecraft();
 
 		if (activeTab instanceof ResearchesTab) {
-			minecraft.fontRenderer.drawString(matrixStack, "Research", containerBounds.x0, containerBounds.y0 - 12,
+			minecraft.fontRenderer.drawString(matrixStack, new TranslationTextComponent("screen.tabname.research").getString(), containerBounds.x0, containerBounds.y0 - 12,
 					0xFF_3f3f3f);
 		}
 
 		minecraft.textureManager.bindTexture(VaultBarOverlay.RESOURCE);
 
-		String text = String.valueOf(VaultBarOverlay.vaultLevel);
+		String text = new TranslationTextComponent("overlay.level.prefix").getString() + 
+        		String.valueOf(VaultBarOverlay.vaultLevel) +
+        		new TranslationTextComponent("overlay.level.suffix").getString();
 		int textWidth = minecraft.fontRenderer.getStringWidth(text);
 		int barWidth = 85;
 		float expPercentage = (float) VaultBarOverlay.vaultExp / VaultBarOverlay.tnl;

@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -44,7 +45,9 @@ public class VaultBarOverlay {
         int bottom = minecraft.getMainWindow().getScaledHeight();
         int right = minecraft.getMainWindow().getScaledWidth();
 
-        String text = String.valueOf(vaultLevel);
+        String text = new TranslationTextComponent("overlay.level.prefix").getString() + 
+        		String.valueOf(vaultLevel) +
+        		new TranslationTextComponent("overlay.level.suffix").getString();
         int textX = midX + 50 - (minecraft.fontRenderer.getStringWidth(text) / 2);
         int textY = bottom - 54;
         int barWidth = 85;
@@ -56,8 +59,8 @@ public class VaultBarOverlay {
                     .anyMatch(EffectInstance::isShowIcon);
             minecraft.getTextureManager().bindTexture(RESOURCE);
             String unspentText = unspentSkillPoints == 1
-                    ? " unspent research point"
-                    : " unspent research points";
+                    ? new TranslationTextComponent("overlay.unspent_points.singular").getString()
+                    : new TranslationTextComponent("overlay.unspent_points.plural").getString();
             String unspentPointsText = unspentSkillPoints + "";
             int unspentPointsWidth = minecraft.fontRenderer.getStringWidth(unspentPointsText);
             int unspentWidth = minecraft.fontRenderer.getStringWidth(unspentText);
