@@ -17,6 +17,7 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Util;
+import vault_research.config.MiscConfig;
 
 public class TeamCommand extends Command{
 	
@@ -60,6 +61,10 @@ public class TeamCommand extends Command{
 	
 	private int invitePlayer(CommandContext<CommandSource> context) throws CommandSyntaxException {
 				
+		if (!MiscConfig.teamsEnabled) {
+			throw new CommandException(new StringTextComponent("Teams have been disabled."));
+		}
+		
 		ServerPlayerEntity receiver = EntityArgument.getPlayer(context, "target");
 		ServerPlayerEntity sender = context.getSource().asPlayer();
 		
