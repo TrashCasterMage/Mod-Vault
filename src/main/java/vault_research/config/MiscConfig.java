@@ -14,11 +14,17 @@ public class MiscConfig {
 	
 	
 	public static class Common {
+		//general
 		public final ForgeConfigSpec.BooleanValue teamsEnabled;
 		public final ForgeConfigSpec.BooleanValue xpGain;
 		public final ForgeConfigSpec.IntValue playerStartingPoints;
 		public final ForgeConfigSpec.BooleanValue noResearchFarming;
 		
+		//tnl
+		public final ForgeConfigSpec.EnumValue<FUNC_TYPE> tnlFuncType;
+		public final ForgeConfigSpec.IntValue tnlBaseValue;
+		public final ForgeConfigSpec.DoubleValue e;
+
 		public Common(ForgeConfigSpec.Builder builder) {
 			
 			//GENERAL
@@ -42,6 +48,23 @@ public class MiscConfig {
 							"Default: true")
 					.define("general.noResearchFarming", true);
 			
+			
+			//TNL FUNCTION
+			tnlFuncType = builder
+					.comment("The type of function used for the TNL function",
+							"LINEAR (default): tnlBaseValue + level * e",
+							"EXPONENTIAL: tnlBaseValue + level^e")
+					.defineEnum("tnl.funcType", FUNC_TYPE.LINEAR);
+			
+			tnlBaseValue = builder
+					.comment("The base value, when level=0. Usually the amount of XP needed to reach level 1")
+					.defineInRange("tnl.baseValue", 500, 1, Integer.MAX_VALUE);
+			
+			e = builder
+					.comment("Extra value used for calculating TNL result.",
+							"For LINEAR function type, this is multiplied by the player's current level",
+							"For EXPONENTIAL function type, the player's current level is raised to ths power.")
+					.defineInRange("tnl.e", 50, 0, (double) Double.MAX_EXPONENT);
 		}
 	}
 	
@@ -63,11 +86,26 @@ public class MiscConfig {
 	public static boolean teamsEnabled, xpGain, noResearchFarming;
 	public static int playerStartingPoints;
 	
+	public static FUNC_TYPE tnlFuncType;
+	public static int tnlBaseValue;
+	public static double tnlE;
+	
 	public static void bakeCommonConfig() {
+		//general
 		teamsEnabled = COMMON.teamsEnabled.get();
 		xpGain = COMMON.teamsEnabled.get();
 		noResearchFarming = COMMON.noResearchFarming.get();
 		playerStartingPoints = COMMON.playerStartingPoints.get();
+		
+		//tnl
+		tnlFuncType = COMMON.tnlFuncType.get();
+		tnlBaseValue = COMMON.tnlBaseValue.get();
+		tnlE = COMMON.e.get();
+	}
+	
+	enum FUNC_TYPE {
+		LINEAR,
+		EXPONENTIAL,
 	}
 
 }
