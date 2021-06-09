@@ -31,3 +31,7 @@ At the moment, there isn't a wiki or other guide on how to configure this mod. F
 * skill_descriptions.json (descriptions for each research)
 * skill_gates.json (define prerequisites and mutual exclusivity)
 * For the resource pack, you'll want the following directory structure: assets/vault_research/textures/gui/research_icons/ In this research_icons folder you can put your textures as png files. This should follow what you put for the texture in researches_gui_styles.json. So if you have a research and you put "pizza" as the texture entry in the json, your icon should be "pizza.png."
+
+Huge thanks to the Iskallia dev team for creating the "Vault Hunters" mod, of which this mod is itself a modification. And also thanks for releasing the mod under the GNU General Public License, so that I could release this for modpack makers to use!
+
+[Original Repo Here]((https://github.com/Iskallia/Vault-public))
