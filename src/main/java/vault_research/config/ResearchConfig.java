@@ -38,11 +38,11 @@ public class ResearchConfig extends Config {
     @Override
     protected void reset() {
         this.MOD_RESEARCHES = new LinkedList<>();
-        this.MOD_RESEARCHES.add(new ModResearch("Backpacks!", 2, "simplybackpacks").withRestrictions(false, false, false, false, false, true, false)); //, false));
-        this.MOD_RESEARCHES.add(new ModResearch("Organisation", 3, "trashcans", "dankstorage", "pickletweaks").withRestrictions(false, false, false, false, false, true, false)); //, false));
-        this.MOD_RESEARCHES.add(new ModResearch("Decorator", 1, "decorative_blocks", "camera", "masonry").withRestrictions(false, false, false, false, false, true, false)); //, false));
-        this.MOD_RESEARCHES.add(new ModResearch("Locked Until Decorator Unlocked", 2, "mcwbridges", "mcwdoors", "mcwroofs", "mcwwindows", "enviromats", "blockcarpentry", "platforms").withRestrictions(false, false, false, false, false, true, false)); //, false));
-        this.MOD_RESEARCHES.add(new ModResearch("Double Locked", 3, "create", "quark").withRestrictions(false, false, false, false, false, true, false)); //, false));
+        this.MOD_RESEARCHES.add(new ModResearch("Backpacks!", 2, "simplybackpacks").withRestrictions(false, false, false, false, false, true, false, false));
+        this.MOD_RESEARCHES.add(new ModResearch("Organisation", 3, "trashcans", "dankstorage", "pickletweaks").withRestrictions(false, false, false, false, false, true, false, false));
+        this.MOD_RESEARCHES.add(new ModResearch("Decorator", 1, "decorative_blocks", "camera", "masonry").withRestrictions(false, false, false, false, false, true, false, false));
+        this.MOD_RESEARCHES.add(new ModResearch("Locked Until Decorator Unlocked", 2, "mcwbridges", "mcwdoors", "mcwroofs", "mcwwindows", "enviromats", "blockcarpentry", "platforms").withRestrictions(false, false, false, false, false, true, false, false));
+        this.MOD_RESEARCHES.add(new ModResearch("Double Locked", 3, "create", "quark").withRestrictions(false, false, false, false, false, true, false, false));
         
         this.CUSTOM_RESEARCHES = new LinkedList<>();
         CustomResearch customResearch = new CustomResearch("Custom Research Example", 100);
@@ -51,7 +51,11 @@ public class ResearchConfig extends Config {
         customResearch.getItemRestrictions().put("appliedenergistics2:molecular_assembler", Restrictions.forItems(true));
         customResearch.getItemRestrictions().put("mekanism:formulaic_assemblicator", Restrictions.forItems(true));
         customResearch.getItemRestrictions().put("minecraft:diamond_sword", Restrictions.forItems(true));
-        
+        customResearch.getItemRestrictions().put("minecraft:diamond_chestplate", Restrictions.forItems(true));
+        customResearch.getItemRestrictions().put("minecraft:diamond_helmet", Restrictions.forItems(true));
+        customResearch.getItemRestrictions().put("minecraft:diamond_boots", Restrictions.forItems(true));
+        customResearch.getItemRestrictions().put("minecraft:diamond_leggings", Restrictions.forItems(true));
+
         customResearch.getEntityRestrictions().put("minecraft:villager", Restrictions.forEntities(true));
         
         customResearch.getBlockRestrictions().put("minecraft:furnace", Restrictions.forBlocks(true));

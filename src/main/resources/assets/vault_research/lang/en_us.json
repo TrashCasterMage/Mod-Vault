@@ -15,6 +15,7 @@
   "overlay.requires_research.interact_entity": "You need to research %s in order to interact with this entity.",
   "overlay.requires_research.dimension": "You need to research %s in order to travel to this dimension.",
   "overlay.requires_research.pickup": "You need to research %s in order to pick up this item.",
+  "overlay.requires_research.equip": "You need to research %s in order to equip this item.",
   "dialog.research.already_unlocked": "Researched",
   "dialog.research.unlock": "Research",
   "overlay.unspent_points.singular": " unspent research point",

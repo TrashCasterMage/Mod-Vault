@@ -7,6 +7,7 @@ import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -71,6 +72,11 @@ public class StageManager {
     	
     	return new TranslationTextComponent("overlay.requires_research." + il8nKey, name);
     }
+    
+    private static void serverWarnResearchRequirement(ServerPlayerEntity player, String researchName, String il8nKey) {
+    	player.connection.sendPacket(new STitlePacket(STitlePacket.Type.ACTIONBAR, getResearchWarning(researchName, il8nKey)));
+
+    }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
@@ -134,45 +140,37 @@ public class StageManager {
         event.setCanceled(true);
     }
     
-    /*@SubscribeEvent
-    public static void onItemPickup(net.minecraftforge.event.entity.player.EntityItemPickupEvent event) {
-    	if (!event.isCancelable()) return;
+    @SubscribeEvent
+    public static void onItemEquip(net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent event) {
+    	if (!(event.getEntity() instanceof ServerPlayerEntity)) return;
     	
-    	PlayerEntity player = event.getPlayer();
+    	PlayerEntity player = (PlayerEntity) event.getEntity();
     	ResearchTree researchTree = getResearchTree(player);
     	
-    	Item grabbedItem = event.getItem().getItem().getItem();
-    	
+    	Item equipped = event.getTo().getItem();
     	String restrictedBy;
     	
-    	restrictedBy = researchTree.restrictedBy(grabbedItem, Restrictions.Type.PICKUP);
+    	restrictedBy = researchTree.restrictedBy(equipped, Restrictions.Type.EQUIP);
     	if (restrictedBy == null) return;
     	
-    	warnResearchRequirement(restrictedBy, "pickup");
-    	event.setCanceled(true);
-    }*/
-        
-    /*@SubscribeEvent
-    public static void dropRestrictedItems(net.minecraftforge.event.TickEvent.PlayerTickEvent event) {   
-    	PlayerEntity player = event.player;
-    	ResearchTree researchTree = getResearchTree(player);
+    	ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+    	serverWarnResearchRequirement(serverPlayer, restrictedBy, "equip");
+    	    	
+    	EquipmentSlotType slot = event.getSlot();
+    	ItemStack removedStack;
     	
-    	for(int i = 0; i < player.inventory.mainInventory.size(); i++) {
-    		ItemStack stack = player.inventory.mainInventory.get(i);
-    		if (stack.isEmpty()) continue;
-    		String restrictedBy;
-    		
-    		restrictedBy = researchTree.restrictedBy(stack.getItem(), Restrictions.Type.PICKUP);
-    		if (restrictedBy == null) continue;
-    		if (player.world.isRemote) {
-        		warnResearchRequirement(restrictedBy, "pickup");
-    		}
-    		ItemStack removed = player.inventory.removeStackFromSlot(i);
-    		player.dropItem(removed, false);
+    	if (slot == EquipmentSlotType.MAINHAND) {
+    		removedStack = player.inventory.removeStackFromSlot(player.inventory.currentItem);
+    	} else if (slot == EquipmentSlotType.OFFHAND) {
+    		removedStack = player.inventory.offHandInventory.set(0, ItemStack.EMPTY);
+    	} else {
+    		removedStack = player.inventory.armorInventory.set(slot.getIndex(), ItemStack.EMPTY);
     	}
     	    	
-    }*/
-    
+    	player.dropItem(removedStack, false);
+
+    }
+        
     @SubscribeEvent
     public static void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) {
         if (!event.isCancelable()) return;
@@ -342,7 +340,7 @@ public class StageManager {
         	//warnResearchRequirement(restrictedBy, "dimension");
     		
         	ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-        	serverPlayer.connection.sendPacket(new STitlePacket(STitlePacket.Type.ACTIONBAR, getResearchWarning(restrictedBy, "dimension")));
+        	serverWarnResearchRequirement(serverPlayer, restrictedBy, "dimension");
     		
     		event.setCanceled(true);
     	}
