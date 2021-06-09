@@ -1,6 +1,6 @@
 ## Vault Research
 
-Vault Research is a mod that allows modpack makers to lock mods behind a progression system. Currently, that progression system is difficult for the modpack maker to change. There is a single next-level equation that dictates when a player "levels" up, granting them a research point which they can use to unlock mods.
+Vault Research is a mod that allows modpack makers to lock mods behind a progression system.
 
 ## For Players
 
