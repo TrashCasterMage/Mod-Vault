@@ -34,4 +34,4 @@ At the moment, there isn't a wiki or other guide on how to configure this mod. F
 
 Huge thanks to the Iskallia dev team for creating the "Vault Hunters" mod, of which this mod is itself a modification. And also thanks for releasing the mod under the GNU General Public License, so that I could release this for modpack makers to use!
 
-[Original Repo Here]((https://github.com/Iskallia/Vault-public))
+[Original Repo Here](https://github.com/Iskallia/Vault-public)
