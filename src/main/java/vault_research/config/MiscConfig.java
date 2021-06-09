@@ -17,26 +17,30 @@ public class MiscConfig {
 		public final ForgeConfigSpec.BooleanValue teamsEnabled;
 		public final ForgeConfigSpec.BooleanValue xpGain;
 		public final ForgeConfigSpec.IntValue playerStartingPoints;
-		//public final ForgeConfigSpec.BooleanValue noResearchFarming;
+		public final ForgeConfigSpec.BooleanValue noResearchFarming;
 		
 		public Common(ForgeConfigSpec.Builder builder) {
 			
 			//GENERAL
 			teamsEnabled = builder
-					.comment("Should players be able to invite other players to their team? (Allows sharing of research)")
+					.comment("Should players be able to invite other players to their team? (Allows sharing of research)",
+							"Default: true")
 					.define("general.teamsEnabled", true);
 			
 			xpGain = builder
-					.comment("Should players gain Vault XP by picking up XP orbs?")
+					.comment("Should players gain Vault XP by picking up XP orbs?",
+							"Default: true")
 					.define("general.xpGain", true);
 			
 			playerStartingPoints = builder
-					.comment("How many Research Points should a player receive when they join a server/load a world for the first time?")
+					.comment("How many Research Points should a player receive when they join a server/load a world for the first time?",
+							"Default: 0")
 					.defineInRange("general.playerStartingPoints", 0, 0, Integer.MAX_VALUE);
 			
-			//noResearchFarming = builder
-					//.comment("Enable this if you want to stop players from farming Vault XP through vanilla means.")
-					//.define("general.noResearchFarming", false);
+			noResearchFarming = builder
+					.comment("Enabling this slows (and eventually stops) Vault XP gain via mob farms.", 
+							"Default: true")
+					.define("general.noResearchFarming", true);
 			
 		}
 	}
@@ -56,13 +60,13 @@ public class MiscConfig {
 		}
 	}
 	
-	public static boolean teamsEnabled, xpGain; //, noResearchFarming;
+	public static boolean teamsEnabled, xpGain, noResearchFarming;
 	public static int playerStartingPoints;
 	
 	public static void bakeCommonConfig() {
 		teamsEnabled = COMMON.teamsEnabled.get();
 		xpGain = COMMON.teamsEnabled.get();
-		//noResearchFarming = COMMON.noResearchFarming.get();
+		noResearchFarming = COMMON.noResearchFarming.get();
 		playerStartingPoints = COMMON.playerStartingPoints.get();
 	}
 
