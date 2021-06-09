@@ -1,4 +1,4 @@
-package vault_research.client.experiencelimiter;
+package vault_research.experiencelimiter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ import vault_research.config.MiscConfig;
 public class ExperienceLimiter {
 	
 	private static Map<ChunkPos, Integer> killMap = new HashMap<>();
-	private static final int decreaseThreshold = 1;
+	private static final int decreaseThreshold = 50;
 	private static final int decreaseAmount = 1;
 	
 	@SubscribeEvent

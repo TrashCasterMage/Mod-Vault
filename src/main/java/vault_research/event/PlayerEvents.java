@@ -18,8 +18,8 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkDirection;
 import vault_research.Vault;
-import vault_research.client.experiencelimiter.ExperienceLimiter;
 import vault_research.config.MiscConfig;
+import vault_research.experiencelimiter.ExperienceLimiter;
 import vault_research.init.ModNetwork;
 import vault_research.world.data.PlayerVaultStatsData;
 
