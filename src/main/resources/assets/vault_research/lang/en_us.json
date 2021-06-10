@@ -22,6 +22,7 @@
   "overlay.unspent_points.plural": " unspent research points",
   "overlay.level.prefix": "",
   "overlay.level.suffix": "",
-  "screen.tabname.research": "Research"
+  "screen.tabname.research": "Research",
+  "chat.message.team.invite": "%s\n%s\n                   %s  %s\n%s"
   
 }
