@@ -20,9 +20,9 @@ public class ItemSkillOrb extends Item {
     public ItemSkillOrb(ItemGroup group) {
         super(new Properties()
                 .group(group)
-                .maxStackSize(64));
+                .maxStackSize(16));
 
-        this.setRegistryName(Vault.id("skill_orb"));
+        this.setRegistryName(Vault.id("research_orb"));
     }
 
     @Override

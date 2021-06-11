@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern":
+  [
+    "sss",
+    "sfs",
+    "sss"
+  ],
+  "key":
+  {
+    "s":
+    {
+      "item": "vault_research:research_shard"
+    },
+    "f":
+    {
+      "item": "vault_research:orb_frame"
+    }
+  },
+  "result":
+  {
+    "item": "vault_research:research_orb",
+    "count": 1
+  }
+}

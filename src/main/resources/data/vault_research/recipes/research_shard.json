@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "vault_research:research_essence"
+    },
+    {
+      "item": "vault_research:research_essence"
+    },
+    {
+      "item": "vault_research:research_essence"
+    },
+    {
+      "item": "vault_research:research_essence"
+    },
+    {
+      "item": "vault_research:research_essence"
+    },
+    {
+      "item": "vault_research:research_essence"
+    },
+    {
+      "item": "vault_research:research_essence"
+    },
+    {
+      "item": "vault_research:research_essence"
+    },
+    {
+      "item": "vault_research:research_essence"
+    }
+  ],
+  "result": {
+    "item": "vault_research:research_shard",
+    "count": 1
+  }
+}

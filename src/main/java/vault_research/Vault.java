@@ -45,7 +45,7 @@ public class Vault {
         ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
         ServerWorld serverWorld = player.getServerWorld();
         MinecraftServer server = player.getServer();
-        //PlayerVaultStatsData.get(serverWorld).getVaultStats(player).sync(server);
+
         PlayerResearchesData.get(serverWorld).getResearches(player).sync(server);
         PlayerVaultStatsData.get(serverWorld).getVaultStats(player).sync(server);
     }

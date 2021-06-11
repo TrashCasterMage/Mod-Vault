@@ -1,9 +1,9 @@
 {
   "itemGroup.vault_research": "Vault Research",
-  "item.vault_research.skill_orb": "Research Orb",
+  "item.vault_research.research_orb": "Research Orb",
   "item.vault_research.orb_frame": "Research Frame",
-  "item.vault_research.skill_shard": "Research Shard",
-  "item.vault_research.skill_essence": "Research Essence",
+  "item.vault_research.research_shard": "Research Shard",
+  "item.vault_research.research_essence": "Research Essence",
   "key.category.vault_research": "Vault Research",
   "key.vault_research.open_ability_tree": "Open Research Menu",
   "tooltip.requires_research": "Requires Research:",
