@@ -18,10 +18,13 @@ public class ModCommands {
     public static ReloadConfigsCommand RELOAD_CONFIGS;
     public static VaultLevelCommand VAULT_LEVEL;
     public static TeamCommand TEAM;
+    public static ResearchCommand RESEARCH;
+    
     public static void registerCommands(CommandDispatcher<CommandSource> dispatcher, Commands.EnvironmentType env) {
         RELOAD_CONFIGS = registerCommand(ReloadConfigsCommand::new, dispatcher, env);
         VAULT_LEVEL = registerCommand(VaultLevelCommand::new, dispatcher, env);
         TEAM = registerCommand(TeamCommand::new, dispatcher, env);
+        RESEARCH = registerCommand(ResearchCommand::new, dispatcher, env);
     }
 
     public static <T extends Command> T registerCommand(Supplier<T> supplier, CommandDispatcher<CommandSource> dispatcher, Commands.EnvironmentType env) {

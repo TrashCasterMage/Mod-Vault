@@ -129,6 +129,10 @@ public class ResearchTree implements INBTSerializable<CompoundNBT> {
         this.researchesDone.clear();
     }
     
+    public boolean removeResearchIfResearched(String researchName) {
+    	return this.researchesDone.remove(researchName);
+    }
+    
     public String restrictedBy(RegistryKey<World> dim, Restrictions.Type restrictionType) {
     	ResourceLocation dimLoc = dim.getLocation();
     	for (Research research : ModConfigs.RESEARCHES.getAll()) {
