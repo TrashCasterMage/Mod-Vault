@@ -40,6 +40,7 @@ public class PlayerResearchesData extends WorldSavedData {
 
     public ResearchTree getResearches(UUID uuid) {
     	UUID teamId = ResearchTree.getOrCreateTeam(uuid);
+    	markDirty();
         return this.teamMap.computeIfAbsent(teamId, id -> new ResearchTree(id.toString()));
     }
     
