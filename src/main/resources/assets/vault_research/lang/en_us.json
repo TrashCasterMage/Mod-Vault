@@ -1,9 +1,9 @@
 {
   "itemGroup.vault_research": "Vault Research",
-  "item.vault_research.skill_orb": "Research Orb",
+  "item.vault_research.research_orb": "Research Orb",
   "item.vault_research.orb_frame": "Research Frame",
-  "item.vault_research.skill_shard": "Research Shard",
-  "item.vault_research.skill_essence": "Research Essence",
+  "item.vault_research.research_shard": "Research Shard",
+  "item.vault_research.research_essence": "Research Essence",
   "key.category.vault_research": "Vault Research",
   "key.vault_research.open_ability_tree": "Open Research Menu",
   "tooltip.requires_research": "Requires Research:",
@@ -15,12 +15,14 @@
   "overlay.requires_research.interact_entity": "You need to research %s in order to interact with this entity.",
   "overlay.requires_research.dimension": "You need to research %s in order to travel to this dimension.",
   "overlay.requires_research.pickup": "You need to research %s in order to pick up this item.",
+  "overlay.requires_research.equip": "You need to research %s in order to equip this item.",
   "dialog.research.already_unlocked": "Researched",
   "dialog.research.unlock": "Research",
   "overlay.unspent_points.singular": " unspent research point",
   "overlay.unspent_points.plural": " unspent research points",
   "overlay.level.prefix": "",
   "overlay.level.suffix": "",
-  "screen.tabname.research": "Research"
+  "screen.tabname.research": "Research",
+  "chat.message.team.invite": "%s\n%s\n                   %s  %s\n%s"
   
 }

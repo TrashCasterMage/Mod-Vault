@@ -24,6 +24,8 @@ public class ExperienceLimiter {
 	
 	@SubscribeEvent
 	public static void onChunkDataLoadEvent(ChunkDataEvent.Load event) {
+		if (!MiscConfig.noResearchFarming) return;
+		if (event.getChunk().getInhabitedTime() < 1) return;
 		if (event.getWorld().isRemote()) return;
 		
 		CompoundNBT data = event.getData();
@@ -36,6 +38,7 @@ public class ExperienceLimiter {
 	
 	@SubscribeEvent
 	public static void onChunkDataSaveEvent(ChunkDataEvent.Save event) {
+		if (!MiscConfig.noResearchFarming) return;
 		if (event.getWorld().isRemote()) return;
 		
 		int kills = killMap.getOrDefault(event.getChunk().getPos(), 0);
@@ -49,6 +52,7 @@ public class ExperienceLimiter {
 	
 	@SubscribeEvent
 	public static void onMobDeath(net.minecraftforge.event.entity.living.LivingExperienceDropEvent event) {
+		if (!MiscConfig.noResearchFarming) return;
 		//Vault.LOGGER.debug("original: " + event.getOriginalExperience());
 		//Vault.LOGGER.debug("dropped: " + event.getDroppedExperience());
 		if (event.getEntityLiving().world.isRemote) return;

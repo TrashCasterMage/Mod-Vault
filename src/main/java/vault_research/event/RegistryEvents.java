@@ -35,5 +35,10 @@ public class RegistryEvents {
     public static void onRecipeRegister(RegistryEvent.Register<IRecipeSerializer<?>> event) {
         ModRecipes.Serializer.register(event);
     }
+    
+    @SubscribeEvent
+    public static void onItemRegister(RegistryEvent.Register<Item> event) {
+    	ModItems.registerItems(event);
+    }
 
 }

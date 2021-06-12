@@ -31,7 +31,6 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
     private int vaultLevel;
     private int exp;
     private int unspentSkillPts;
-    private int unspentKnowledgePts;
     private int spentSkillPts;
     
     
@@ -44,7 +43,6 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
     	this.vaultLevel = stats.vaultLevel;
     	this.exp = stats.exp;
     	this.unspentSkillPts = stats.unspentSkillPts;
-    	this.unspentKnowledgePts = stats.unspentKnowledgePts;
     	this.spentSkillPts = stats.spentSkillPts;
     }
     
@@ -58,10 +56,6 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
 
     public int getUnspentSkillPts() {
         return unspentSkillPts;
-    }
-
-    public int getUnspentKnowledgePts() {
-        return unspentKnowledgePts;
     }
     
     public int getSpentSkillPts() {
@@ -136,19 +130,10 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
         return this;
     }
 
-    public PlayerVaultStats spendKnowledgePoints(MinecraftServer server, int amount) {
-        this.unspentKnowledgePts -= amount;
-
-        sync(server);
-
-        return this;
-    }
-
     public PlayerVaultStats reset(MinecraftServer server) {
         this.vaultLevel = 0;
         this.exp = 0;
         this.unspentSkillPts = 0;
-        this.unspentKnowledgePts = 0;
         this.spentSkillPts = 0;
 
         sync(server);
@@ -161,11 +146,6 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
         return this;
     }
 
-    public PlayerVaultStats addKnowledgePoints(int amount) {
-        this.unspentKnowledgePts += amount;
-        return this;
-    }
-
     /* --------------------------------------- */
 
     public void sync(MinecraftServer server) {
@@ -175,7 +155,7 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
     		if (pair.getValue().equals(this.uuid)) {
     			NetcodeUtils.runIfPresent(server, pair.getKey(), player -> {
     	            ModNetwork.CHANNEL.sendTo(
-    	                    new VaultLevelMessage(this.vaultLevel, this.exp, this.getTnl(), this.unspentSkillPts, this.unspentKnowledgePts, this.spentSkillPts),
+    	                    new VaultLevelMessage(this.vaultLevel, this.exp, this.getTnl(), this.unspentSkillPts, this.spentSkillPts),
     	                    player.connection.netManager,
     	                    NetworkDirection.PLAY_TO_CLIENT
     	            );
@@ -191,7 +171,6 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
         nbt.putInt("vaultLevel", vaultLevel);
         nbt.putInt("exp", exp);
         nbt.putInt("unspentSkillPts", unspentSkillPts);
-        nbt.putInt("unspentKnowledgePts", unspentKnowledgePts);
         nbt.putInt("spentSkillPts", spentSkillPts);
         return nbt;
     }
@@ -201,7 +180,6 @@ public class PlayerVaultStats implements INBTSerializable<CompoundNBT> {
         this.vaultLevel = nbt.getInt("vaultLevel");
         this.exp = nbt.getInt("exp");
         this.unspentSkillPts = nbt.getInt("unspentSkillPts");
-        this.unspentKnowledgePts = nbt.getInt("unspentKnowledgePts");
         this.spentSkillPts = nbt.getInt("spentSkillPts");
         this.vaultLevel = nbt.getInt("vaultLevel");
     }

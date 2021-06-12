@@ -16,17 +16,15 @@ public class VaultLevelMessage {
     public int vaultLevel;
     public int vaultExp, tnl;
     public int unspentSkillPoints;
-    public int unspentKnowledgePoints;
     public int spentSkillPoints;
 
     public VaultLevelMessage() { }
 
-    public VaultLevelMessage(int vaultLevel, int vaultExp, int tnl, int unspentSkillPoints, int unspentKnowledgePoints, int spentSkillPoints) {
+    public VaultLevelMessage(int vaultLevel, int vaultExp, int tnl, int unspentSkillPoints, int spentSkillPoints) {
         this.vaultLevel = vaultLevel;
         this.vaultExp = vaultExp;
         this.tnl = tnl;
         this.unspentSkillPoints = unspentSkillPoints;
-        this.unspentKnowledgePoints = unspentKnowledgePoints;
         this.spentSkillPoints = spentSkillPoints;
     }
 
@@ -35,7 +33,6 @@ public class VaultLevelMessage {
         buffer.writeInt(message.vaultExp);
         buffer.writeInt(message.tnl);
         buffer.writeInt(message.unspentSkillPoints);
-        buffer.writeInt(message.unspentKnowledgePoints);
         buffer.writeInt(message.spentSkillPoints);
     }
 
@@ -45,7 +42,6 @@ public class VaultLevelMessage {
         message.vaultExp = buffer.readInt();
         message.tnl = buffer.readInt();
         message.unspentSkillPoints = buffer.readInt();
-        message.unspentKnowledgePoints = buffer.readInt();
         message.spentSkillPoints = buffer.readInt();
         return message;
     }
@@ -57,7 +53,6 @@ public class VaultLevelMessage {
             VaultBarOverlay.vaultExp = message.vaultExp;
             VaultBarOverlay.tnl = message.tnl;
             VaultBarOverlay.unspentSkillPoints = message.unspentSkillPoints;
-            VaultBarOverlay.unspentKnowledgePoints = message.unspentKnowledgePoints;
             VaultBarOverlay.spentSkillPoints = message.spentSkillPoints;
 
             VaultBarOverlay.expGainedAnimation.reset();

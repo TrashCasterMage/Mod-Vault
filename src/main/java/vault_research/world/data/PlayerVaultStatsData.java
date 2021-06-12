@@ -87,25 +87,9 @@ public class PlayerVaultStatsData extends WorldSavedData {
         return this;
     }
 
-    public PlayerVaultStatsData spendKnowledgePts(ServerPlayerEntity player, int amount) {
-        this.getVaultStats(player).spendKnowledgePoints(player.getServer(), amount);
-
-        markDirty();
-        return this;
-    }
-
     public PlayerVaultStatsData addSkillPoint(ServerPlayerEntity player, int amount) {
         this.getVaultStats(player)
                 .addSkillPoints(amount)
-                .sync(player.getServerWorld().getServer());
-
-        markDirty();
-        return this;
-    }
-
-    public PlayerVaultStatsData addKnowledgePoints(ServerPlayerEntity player, int amount) {
-        this.getVaultStats(player)
-                .addKnowledgePoints(amount)
                 .sync(player.getServerWorld().getServer());
 
         markDirty();
