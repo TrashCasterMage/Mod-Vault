@@ -8,6 +8,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.StringNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -20,8 +21,10 @@ import vault_research.item.ItemSkillShard;
 import vault_research.research.type.Research;
 
 public class ModItems {
+	
+	public static final ResourceLocation GROUP_TEXTURE = new ResourceLocation(Vault.MOD_ID, "textures/gui/research-creative-tab.png");
 
-	public static ItemGroup RESEARCH_MOD_GROUP = new ItemGroup(Vault.MOD_ID) {
+	public static ItemGroup RESEARCH_MOD_GROUP = (new ItemGroup(Vault.MOD_ID) {
 		@Override
 		public ItemStack createIcon() {
 			return new ItemStack(RESEARCH_ORB);
@@ -46,8 +49,19 @@ public class ModItems {
 				
 				items.add(unlockOrb);
 			}
-		};
-	};
+		}
+		
+		@Override
+		public boolean hasSearchBar() {
+			return true;
+		}
+		
+		@Override
+		public int getSearchbarWidth() {
+			return 79;
+		}
+	}).setBackgroundImage(GROUP_TEXTURE);
+
 		
 	public static ItemSkillOrb RESEARCH_ORB = new ItemSkillOrb(RESEARCH_MOD_GROUP);
 	public static ItemSkillOrbFrame RESEARCH_ORB_FRAME = new ItemSkillOrbFrame(RESEARCH_MOD_GROUP, Vault.id("orb_frame"));
@@ -60,7 +74,7 @@ public class ModItems {
 	
 	public static void registerItems(RegistryEvent.Register<Item> event ) {
 		IForgeRegistry<Item> registry = event.getRegistry();
-				
+						
 		registry.register(RESEARCH_ORB);
 		registry.register(RESEARCH_ORB_FRAME);
 		registry.register(RESEARCH_SHARD);
