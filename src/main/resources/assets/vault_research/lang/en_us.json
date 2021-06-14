@@ -4,6 +4,7 @@
   "item.vault_research.orb_frame": "Research Frame",
   "item.vault_research.research_shard": "Research Shard",
   "item.vault_research.research_essence": "Research Essence",
+  "item.vault_research.research_key": "Research Key",
   "key.category.vault_research": "Vault Research",
   "key.vault_research.open_ability_tree": "Open Research Menu",
   "tooltip.requires_research": "Requires Research:",
